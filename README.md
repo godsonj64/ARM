@@ -20,54 +20,65 @@ R(q) = softmax_i(rho(q, m_i)) M
 
 This lets different transformed versions of a query retrieve the same memory atom.
 
-## What is included
+## Benchmarks included
 
-- Learned affine algebraic operator bank
-- Multi-path resonance scoring with `logsumexp`
-- Learned positive diagonal metric
-- Learned nonnegative operator costs
-- Cycle-consistency loss, such as `A^4 ≈ I`
-- Equivalence loss for different cues of the same hidden state
-- Synthetic cyclic fan-state benchmark
-- Training loop, validation loop, tests, plots, and checkpoint saving
-- Google Colab notebook and standalone Python script
+### 1. Synthetic cyclic fan-state benchmark
 
-## Run in Google Colab
+`arm_colab_runnable.py` tests ARM on the original cyclic hidden-state idea. Multiple cues point to the same hidden fan state.
+
+### 2. Real CLUTRR benchmark
+
+`arm_clutrr_colab.py` trains ARM on CLUTRR, a real kinship-reasoning benchmark where a model must infer hidden family relations from short stories. This is a natural test for ARM because a target relation can be reached through different relational paths.
+
+The CLUTRR script includes:
+
+- Hugging Face dataset loading with config fallback
+- Defensive column inference for CLUTRR variants
+- Word-level tokenizer
+- GRU text encoder
+- ARM relation-memory classifier
+- Learned algebraic operator bank
+- Multi-path resonance retrieval
+- Cycle-consistency regularization
+- Validation accuracy reporting
+- Checkpoint saving as `arm_clutrr_checkpoint.pt`
+
+## Run CLUTRR in Google Colab
 
 Open `arm_colab_runnable.ipynb` in Colab and run the single code cell.
 
-The notebook will:
+The notebook installs dependencies, downloads `arm_clutrr_colab.py`, trains ARM on CLUTRR, plots learning curves, and saves a checkpoint.
 
-1. Build the cyclic fan-state dataset.
-2. Instantiate the ARM model.
-3. Run shape, gradient, and finite-loss tests.
-4. Train the model.
-5. Evaluate retrieval accuracy.
-6. Print memory retrieval examples.
-7. Plot learning curves.
-8. Save `arm_colab_checkpoint.pt`.
+## Run CLUTRR locally
 
-## Run locally
+```bash
+pip install -r requirements.txt
+python arm_clutrr_colab.py
+```
+
+## Run the synthetic benchmark locally
 
 ```bash
 pip install -r requirements.txt
 python arm_colab_runnable.py
 ```
 
-The script automatically uses CUDA when available.
+Both scripts automatically use CUDA when available.
 
 ## Files
 
 ```text
-arm_colab_runnable.py       Standalone PyTorch script
-arm_colab_runnable.ipynb    Colab notebook
-requirements.txt            Minimal dependencies
+arm_clutrr_colab.py         Real CLUTRR benchmark script
+arm_colab_runnable.py       Synthetic cyclic fan-state benchmark
+arm_colab_runnable.ipynb    Colab launcher for CLUTRR
+requirements.txt            Python dependencies
 .gitignore                  Ignore generated checkpoints and caches
+LICENSE                     MIT license
 ```
 
 ## Research status
 
-This is a research prototype. It is intended to test the ARM mechanism on a controlled cyclic hidden-state benchmark. It is not yet a replacement for transformer attention on large-scale language tasks.
+This is a research prototype. The synthetic benchmark tests whether ARM can retrieve one hidden memory from multiple cue forms. The CLUTRR benchmark tests whether ARM can learn relational memory retrieval on real text-based kinship reasoning. It is not yet a replacement for transformer attention on large-scale language tasks.
 
 ## Author
 
