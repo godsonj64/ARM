@@ -1,0 +1,1 @@
+print('ARM MNIST placeholder')
