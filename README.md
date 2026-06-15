@@ -26,34 +26,39 @@ This lets different transformed versions of a query retrieve the same memory ato
 
 `arm_colab_runnable.py` tests ARM on the original cyclic hidden-state idea. Multiple cues point to the same hidden fan state.
 
-### 2. Real CLUTRR benchmark
+### 2. Real bAbI memory QA benchmark
 
-`arm_clutrr_colab.py` trains ARM on CLUTRR, a real kinship-reasoning benchmark where a model must infer hidden family relations from short stories. This is a natural test for ARM because a target relation can be reached through different relational paths.
+`arm_babi_colab.py` trains ARM on the official Facebook bAbI task archive. The default task is Task 2, two supporting facts, which tests multi-hop memory retrieval from short stories.
 
-The CLUTRR script includes:
+The bAbI script includes:
 
-- Hugging Face dataset loading with config fallback
-- Defensive column inference for CLUTRR variants
+- Official bAbI archive download
+- Safe archive extraction
+- bAbI task parser
 - Word-level tokenizer
 - GRU text encoder
-- ARM relation-memory classifier
+- ARM answer-memory classifier
 - Learned algebraic operator bank
 - Multi-path resonance retrieval
 - Cycle-consistency regularization
 - Validation accuracy reporting
-- Checkpoint saving as `arm_clutrr_checkpoint.pt`
+- Checkpoint saving as `arm_babi_checkpoint.pt`
 
-## Run CLUTRR in Google Colab
+### 3. CLUTRR experimental script
+
+`arm_clutrr_colab.py` remains in the repository as an experimental script, but CLUTRR is not available through Hugging Face as `clutrr`. The Colab launcher therefore uses bAbI as the dependable real benchmark.
+
+## Run bAbI in Google Colab
 
 Open `arm_colab_runnable.ipynb` in Colab and run the single code cell.
 
-The notebook installs dependencies, downloads `arm_clutrr_colab.py`, trains ARM on CLUTRR, plots learning curves, and saves a checkpoint.
+The notebook clones this repository, runs `arm_babi_colab.py`, plots learning curves, and saves a checkpoint.
 
-## Run CLUTRR locally
+## Run bAbI locally
 
 ```bash
 pip install -r requirements.txt
-python arm_clutrr_colab.py
+python arm_babi_colab.py
 ```
 
 ## Run the synthetic benchmark locally
@@ -68,9 +73,10 @@ Both scripts automatically use CUDA when available.
 ## Files
 
 ```text
-arm_clutrr_colab.py         Real CLUTRR benchmark script
+arm_babi_colab.py           Real bAbI memory QA benchmark
+arm_clutrr_colab.py         Experimental CLUTRR script
 arm_colab_runnable.py       Synthetic cyclic fan-state benchmark
-arm_colab_runnable.ipynb    Colab launcher for CLUTRR
+arm_colab_runnable.ipynb    Colab launcher for bAbI
 requirements.txt            Python dependencies
 .gitignore                  Ignore generated checkpoints and caches
 LICENSE                     MIT license
@@ -78,7 +84,7 @@ LICENSE                     MIT license
 
 ## Research status
 
-This is a research prototype. The synthetic benchmark tests whether ARM can retrieve one hidden memory from multiple cue forms. The CLUTRR benchmark tests whether ARM can learn relational memory retrieval on real text-based kinship reasoning. It is not yet a replacement for transformer attention on large-scale language tasks.
+This is a research prototype. The synthetic benchmark tests whether ARM can retrieve one hidden memory from multiple cue forms. The bAbI benchmark tests whether ARM can learn text-based multi-hop memory retrieval on a real public QA dataset. It is not yet a replacement for transformer attention on large-scale language tasks.
 
 ## Author
 
