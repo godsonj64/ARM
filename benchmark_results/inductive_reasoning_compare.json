@@ -1,0 +1,367 @@
+{
+  "babi": {
+    "labels": [
+      "bathroom",
+      "bedroom",
+      "garden",
+      "hallway",
+      "kitchen",
+      "office"
+    ],
+    "models": {
+      "arm": {
+        "parameters": 403464,
+        "best_val_acc": 0.38,
+        "final_val": {
+          "loss": 1.5909671449661256,
+          "acc": 0.38
+        },
+        "history": {
+          "train_loss": [
+            4.077966928482056,
+            2.0822935945847454,
+            1.8945789337158203,
+            1.898487175212187,
+            2.06484915228451,
+            1.8839635007521685,
+            1.8907008661943323,
+            1.8588451778187471,
+            1.869012482026044,
+            1.8417698776020723,
+            1.8101195587831385,
+            1.7579493943382711,
+            1.744927350212546,
+            1.7029905108844532,
+            1.6634658645181095,
+            1.6069736059974222,
+            1.5861854903838213,
+            1.531268547562992,
+            1.4891980816336239,
+            1.4412270574008716,
+            1.4215628259322222,
+            1.3723823393092436,
+            1.3563566558501299,
+            1.3440393630196066,
+            1.3261399058734669
+          ],
+          "train_acc": [
+            0.1795343129950411,
+            0.16299019622452118,
+            0.15808823529411764,
+            0.17892156891963062,
+            0.17340686303727768,
+            0.19301470588235295,
+            0.15441176558242126,
+            0.17034313652445288,
+            0.17095588191467173,
+            0.2028186264283517,
+            0.19362745083430233,
+            0.23529411677051992,
+            0.25245098156087536,
+            0.2745098007075927,
+            0.2971813705037622,
+            0.32536764705882354,
+            0.32965686566689434,
+            0.3388480368782492,
+            0.3762254890273599,
+            0.4099264705882353,
+            0.4001225496039671,
+            0.42953431255677166,
+            0.43995098331395316,
+            0.4479166690041037,
+            0.44975490605129914
+          ],
+          "val_loss": [
+            2.4733039951324463,
+            1.8889395761489869,
+            1.8487934494018554,
+            2.177217359542847,
+            1.9279915523529052,
+            1.848488631248474,
+            1.8997266817092895,
+            1.890310344696045,
+            2.001116323471069,
+            1.8189680242538453,
+            1.7524060821533203,
+            1.7581419372558593,
+            1.7478879499435425,
+            1.7181447267532348,
+            1.717854199409485,
+            1.6706086206436157,
+            1.638863091468811,
+            1.628786187171936,
+            1.6317077445983887,
+            1.6130836296081543,
+            1.6120612049102783,
+            1.6218787765502929,
+            1.6208257484436035,
+            1.5874934768676758,
+            1.5909671449661256
+          ],
+          "val_acc": [
+            0.17000000089406966,
+            0.16333333194255828,
+            0.15666667073965074,
+            0.15666666984558106,
+            0.17000000089406966,
+            0.15666667073965074,
+            0.17000000089406966,
+            0.15666666746139526,
+            0.16333333194255828,
+            0.20666666984558105,
+            0.24000000357627868,
+            0.24333332866430282,
+            0.24666666507720947,
+            0.26666667640209196,
+            0.2866666620969772,
+            0.3066666734218597,
+            0.32666666388511656,
+            0.34666667342185975,
+            0.32,
+            0.32666666686534884,
+            0.3466666668653488,
+            0.3666666603088379,
+            0.36,
+            0.37666666984558106,
+            0.38
+          ]
+        },
+        "test": {
+          "acc": 0.2595,
+          "total": 2000,
+          "by_group": {
+            "2": {
+              "acc": 0.331,
+              "total": 1000
+            },
+            "3": {
+              "acc": 0.188,
+              "total": 1000
+            }
+          },
+          "samples": [
+            {
+              "text": "mary got the milk there. john moved to the bedroom. sandra went back to the kitchen. mary travelled to the hallway. [QUERY] where is the milk? ",
+              "true": "hallway",
+              "predicted": "hallway",
+              "confidence": 0.6419,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "mary got the milk there. john moved to the bedroom. sandra went back to the kitchen. mary travelled to the hallway. john got the football there. john went to the hallway. [QUERY] where is the football? ",
+              "true": "hallway",
+              "predicted": "hallway",
+              "confidence": 0.5867,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "mary got the milk there. john moved to the bedroom. sandra went back to the kitchen. mary travelled to the hallway. john got the football there. john went to the hallway. john put down the football. mary went to the garden. [QUERY] where is the football? ",
+              "true": "hallway",
+              "predicted": "hallway",
+              "confidence": 0.5559,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "mary got the milk there. john moved to the bedroom. sandra went back to the kitchen. mary travelled to the hallway. john got the football there. john went to the hallway. john put down the football. mary went to the garden. john went to the kitchen. sandra travelled to the hallway. [QUERY] where is the football? ",
+              "true": "hallway",
+              "predicted": "hallway",
+              "confidence": 0.5326,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "mary got the milk there. john moved to the bedroom. sandra went back to the kitchen. mary travelled to the hallway. john got the football there. john went to the hallway. john put down the football. mary went to the garden. john went to the kitchen. sandra travelled to the hallway. daniel went to the hallway. mary discarded the milk. [QUERY] where is the milk? ",
+              "true": "garden",
+              "predicted": "hallway",
+              "confidence": 0.5722,
+              "group": "2",
+              "correct": false
+            }
+          ]
+        }
+      },
+      "transformer_small": {
+        "parameters": 427270,
+        "best_val_acc": 0.3633333325386047,
+        "final_val": {
+          "loss": 1.5864947652816772,
+          "acc": 0.35333333611488343
+        },
+        "history": {
+          "train_loss": [
+            1.9143608387778788,
+            1.799611021490658,
+            1.7154661907869226,
+            1.6992255870033712,
+            1.6878095374387854,
+            1.6300089148914112,
+            1.6159611169029684,
+            1.6087135497261495,
+            1.5852857197032255,
+            1.5729590514126945,
+            1.560320629793055,
+            1.5377549423890955,
+            1.530187915353214,
+            1.4948507477255428,
+            1.4641658768934362,
+            1.4572145658380844,
+            1.4173188560149248,
+            1.408791044179131,
+            1.3833792209625244,
+            1.355467389611637,
+            1.3176894889158361,
+            1.3159688781289494,
+            1.2951954883687637,
+            1.3053625120836145,
+            1.2768005343044506
+          ],
+          "train_acc": [
+            0.1887254899038988,
+            0.205882352502907,
+            0.26838235294117646,
+            0.2598039244904238,
+            0.25919117734712716,
+            0.28737745477872734,
+            0.290441178223666,
+            0.30453431343331056,
+            0.3075980403844048,
+            0.326593139592339,
+            0.32475490254514355,
+            0.3400735320413814,
+            0.3474264705882353,
+            0.3737745092195623,
+            0.3890931413454168,
+            0.38174019315663504,
+            0.3964460807688096,
+            0.41360294117647056,
+            0.4289215680430917,
+            0.4473039157250348,
+            0.4650735311648425,
+            0.4699754907804377,
+            0.4797794100116281,
+            0.470588240553351,
+            0.4950980473967159
+          ],
+          "val_loss": [
+            1.811764168739319,
+            1.7481880712509155,
+            1.7133109617233275,
+            1.7768434190750122,
+            1.6371614599227906,
+            1.643208203315735,
+            1.6819118928909302,
+            1.7005001258850099,
+            1.636649489402771,
+            1.6355782842636108,
+            1.653057608604431,
+            1.661962971687317,
+            1.6374634885787964,
+            1.6074954271316528,
+            1.6265966272354127,
+            1.6354185438156128,
+            1.6457078266143799,
+            1.6256949377059937,
+            1.6201868677139282,
+            1.6050484704971313,
+            1.5963974380493164,
+            1.5856550979614257,
+            1.591202244758606,
+            1.5915900039672852,
+            1.5864947652816772
+          ],
+          "val_acc": [
+            0.1766666692495346,
+            0.2533333319425583,
+            0.26666666150093077,
+            0.21666666984558106,
+            0.2866666716337204,
+            0.2533333289623261,
+            0.25333333015441895,
+            0.26,
+            0.3066666668653488,
+            0.26666666358709334,
+            0.26333333492279054,
+            0.28333333015441897,
+            0.2799999940395355,
+            0.33000000596046447,
+            0.28000000953674314,
+            0.2999999988079071,
+            0.3066666662693024,
+            0.27999999701976774,
+            0.34999999046325686,
+            0.3333333337306976,
+            0.3433333361148834,
+            0.3500000059604645,
+            0.3633333325386047,
+            0.35333333611488343,
+            0.35333333611488343
+          ]
+        },
+        "test": {
+          "acc": 0.224,
+          "total": 2000,
+          "by_group": {
+            "2": {
+              "acc": 0.269,
+              "total": 1000
+            },
+            "3": {
+              "acc": 0.179,
+              "total": 1000
+            }
+          },
+          "samples": [
+            {
+              "text": "mary got the milk there. john moved to the bedroom. sandra went back to the kitchen. mary travelled to the hallway. [QUERY] where is the milk? ",
+              "true": "hallway",
+              "predicted": "hallway",
+              "confidence": 0.85,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "mary got the milk there. john moved to the bedroom. sandra went back to the kitchen. mary travelled to the hallway. john got the football there. john went to the hallway. [QUERY] where is the football? ",
+              "true": "hallway",
+              "predicted": "hallway",
+              "confidence": 0.9383,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "mary got the milk there. john moved to the bedroom. sandra went back to the kitchen. mary travelled to the hallway. john got the football there. john went to the hallway. john put down the football. mary went to the garden. [QUERY] where is the football? ",
+              "true": "hallway",
+              "predicted": "garden",
+              "confidence": 0.5511,
+              "group": "2",
+              "correct": false
+            },
+            {
+              "text": "mary got the milk there. john moved to the bedroom. sandra went back to the kitchen. mary travelled to the hallway. john got the football there. john went to the hallway. john put down the football. mary went to the garden. john went to the kitchen. sandra travelled to the hallway. [QUERY] where is the football? ",
+              "true": "hallway",
+              "predicted": "hallway",
+              "confidence": 0.5055,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "mary got the milk there. john moved to the bedroom. sandra went back to the kitchen. mary travelled to the hallway. john got the football there. john went to the hallway. john put down the football. mary went to the garden. john went to the kitchen. sandra travelled to the hallway. daniel went to the hallway. mary discarded the milk. [QUERY] where is the milk? ",
+              "true": "garden",
+              "predicted": "hallway",
+              "confidence": 0.523,
+              "group": "2",
+              "correct": false
+            }
+          ]
+        }
+      }
+    },
+    "tasks": [
+      2,
+      3
+    ],
+    "source_url": "https://s3.amazonaws.com/text-datasets/babi_tasks_1-20_v1-2.tar.gz"
+  }
+}

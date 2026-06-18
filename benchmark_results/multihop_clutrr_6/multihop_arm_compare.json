@@ -1,0 +1,477 @@
+{
+  "clutrr_test": {
+    "labels": [
+      "aunt",
+      "brother",
+      "daughter",
+      "daughter-in-law",
+      "father",
+      "father-in-law",
+      "granddaughter",
+      "grandfather",
+      "grandmother",
+      "grandson",
+      "mother",
+      "mother-in-law",
+      "nephew",
+      "niece",
+      "sister",
+      "son",
+      "son-in-law",
+      "uncle"
+    ],
+    "models": {
+      "arm": {
+        "parameters": 758024,
+        "best_val_acc": 0.9736666665077209,
+        "final_val": {
+          "loss": 0.08615175254642964,
+          "acc": 0.9736666665077209
+        },
+        "history": {
+          "train_loss": [
+            2.479329623222351,
+            0.6262742788791656,
+            0.2786230012178421,
+            0.1204816317409277,
+            0.04271475067734718,
+            0.018315745485946534
+          ],
+          "train_acc": [
+            0.25391666654497386,
+            0.7770000014305115,
+            0.9048333320617675,
+            0.959,
+            0.9857499957084656,
+            0.9942499952316284
+          ],
+          "val_loss": [
+            1.1235816621780395,
+            0.3596125113964081,
+            0.2365748057961464,
+            0.1372819585800171,
+            0.10421820451319218,
+            0.08615175254642964
+          ],
+          "val_acc": [
+            0.5773333353996277,
+            0.8763333344459534,
+            0.9223333287239075,
+            0.9560000004768372,
+            0.9673333339691162,
+            0.9736666665077209
+          ]
+        },
+        "test": {
+          "acc": 0.27099236641221375,
+          "total": 1048,
+          "by_group": {
+            "10": {
+              "acc": 0.06557377049180328,
+              "total": 122
+            },
+            "2": {
+              "acc": 1.0,
+              "total": 38
+            },
+            "3": {
+              "acc": 0.9532710280373832,
+              "total": 107
+            },
+            "4": {
+              "acc": 0.9090909090909091,
+              "total": 77
+            },
+            "5": {
+              "acc": 0.10270270270270271,
+              "total": 185
+            },
+            "6": {
+              "acc": 0.0761904761904762,
+              "total": 105
+            },
+            "7": {
+              "acc": 0.12903225806451613,
+              "total": 155
+            },
+            "8": {
+              "acc": 0.06666666666666667,
+              "total": 135
+            },
+            "9": {
+              "acc": 0.08064516129032258,
+              "total": 124
+            }
+          },
+          "samples": [
+            {
+              "text": "[Clarence]'s granddaughter, [Emily], was busy helping her brother, [Michael], move to college. [QUERY] ('Clarence', 'Michael')",
+              "true": "grandson",
+              "predicted": "grandson",
+              "confidence": 1.0,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[Emily] and her granddaughter [Ashley] went to the mall [Michael] likes to visit his sister. Her name is [Emily]. [QUERY] ('Ashley', 'Michael')",
+              "true": "grandson",
+              "predicted": "grandson",
+              "confidence": 1.0,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[Tony] and his sister, [June], went to a sneak preview of the Avengers movie and loved it. [Clarence] has 3 children, and one grandson. The Grandsons name is [Tony] [QUERY] ('Clarence', 'June')",
+              "true": "granddaughter",
+              "predicted": "granddaughter",
+              "confidence": 0.9847,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[Glen] is [Emily]'s brand new Baby brother. [Clarence] was excited to have a new Grandchild beside [Emily] [QUERY] ('Clarence', 'Glen')",
+              "true": "grandson",
+              "predicted": "grandson",
+              "confidence": 1.0,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[June] and [Nicolas] are siblings who are enjoying lunch together. [Clarence] bought a train set for his grandson [Nicolas]. [QUERY] ('Clarence', 'June')",
+              "true": "granddaughter",
+              "predicted": "granddaughter",
+              "confidence": 0.9992,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[Clarence] went to the museum with his grandson [Jeff]. [Jeff] and [Louise] asked their mother, if they could go play in the pool. [QUERY] ('Clarence', 'Louise')",
+              "true": "granddaughter",
+              "predicted": "granddaughter",
+              "confidence": 0.9999,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[Emily]'s grandfather [Clarence] recently passed away. She is taking a leave of absence. [Emily] went to her brother [Glen]'s birthday party [QUERY] ('Clarence', 'Glen')",
+              "true": "grandson",
+              "predicted": "grandson",
+              "confidence": 1.0,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[Tony] woke up on his 7th birthday to a surprise present sitting on his night stand. It was from his Grandma [Ashley], and [Tony]'s sister [Charlotte] looked on excitedly as he opened his present. [QUERY] ('Ashley', 'Charlotte')",
+              "true": "granddaughter",
+              "predicted": "granddaughter",
+              "confidence": 1.0,
+              "group": "2",
+              "correct": true
+            }
+          ]
+        }
+      },
+      "multihop_arm": {
+        "parameters": 758028,
+        "best_val_acc": 0.9676666622161865,
+        "final_val": {
+          "loss": 0.09996558232605457,
+          "acc": 0.9676666622161865
+        },
+        "history": {
+          "train_loss": [
+            2.7781263818740847,
+            0.8513378257751465,
+            0.3615985255241394,
+            0.17279199434816836,
+            0.07354928228259086,
+            0.030541515354067086
+          ],
+          "train_acc": [
+            0.19983333413302898,
+            0.7032500014305115,
+            0.881333336353302,
+            0.9427499990463257,
+            0.974999997138977,
+            0.9907499961853027
+          ],
+          "val_loss": [
+            1.5130219569206238,
+            0.49947923147678375,
+            0.3445575941801071,
+            0.1279273439794779,
+            0.13870122149586678,
+            0.09996558232605457
+          ],
+          "val_acc": [
+            0.44699999809265134,
+            0.8263333339691162,
+            0.8929999966621399,
+            0.9550000038146973,
+            0.9630000004768372,
+            0.9676666622161865
+          ]
+        },
+        "test": {
+          "acc": 0.2681297709923664,
+          "total": 1048,
+          "by_group": {
+            "10": {
+              "acc": 0.06557377049180328,
+              "total": 122
+            },
+            "2": {
+              "acc": 1.0,
+              "total": 38
+            },
+            "3": {
+              "acc": 0.9532710280373832,
+              "total": 107
+            },
+            "4": {
+              "acc": 0.8961038961038961,
+              "total": 77
+            },
+            "5": {
+              "acc": 0.11351351351351352,
+              "total": 185
+            },
+            "6": {
+              "acc": 0.0761904761904762,
+              "total": 105
+            },
+            "7": {
+              "acc": 0.12258064516129032,
+              "total": 155
+            },
+            "8": {
+              "acc": 0.06666666666666667,
+              "total": 135
+            },
+            "9": {
+              "acc": 0.056451612903225805,
+              "total": 124
+            }
+          },
+          "samples": [
+            {
+              "text": "[Clarence]'s granddaughter, [Emily], was busy helping her brother, [Michael], move to college. [QUERY] ('Clarence', 'Michael')",
+              "true": "grandson",
+              "predicted": "grandson",
+              "confidence": 0.9999,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[Emily] and her granddaughter [Ashley] went to the mall [Michael] likes to visit his sister. Her name is [Emily]. [QUERY] ('Ashley', 'Michael')",
+              "true": "grandson",
+              "predicted": "grandson",
+              "confidence": 1.0,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[Tony] and his sister, [June], went to a sneak preview of the Avengers movie and loved it. [Clarence] has 3 children, and one grandson. The Grandsons name is [Tony] [QUERY] ('Clarence', 'June')",
+              "true": "granddaughter",
+              "predicted": "granddaughter",
+              "confidence": 0.9964,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[Glen] is [Emily]'s brand new Baby brother. [Clarence] was excited to have a new Grandchild beside [Emily] [QUERY] ('Clarence', 'Glen')",
+              "true": "grandson",
+              "predicted": "grandson",
+              "confidence": 0.9999,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[June] and [Nicolas] are siblings who are enjoying lunch together. [Clarence] bought a train set for his grandson [Nicolas]. [QUERY] ('Clarence', 'June')",
+              "true": "granddaughter",
+              "predicted": "granddaughter",
+              "confidence": 0.9982,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[Clarence] went to the museum with his grandson [Jeff]. [Jeff] and [Louise] asked their mother, if they could go play in the pool. [QUERY] ('Clarence', 'Louise')",
+              "true": "granddaughter",
+              "predicted": "granddaughter",
+              "confidence": 0.9993,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[Emily]'s grandfather [Clarence] recently passed away. She is taking a leave of absence. [Emily] went to her brother [Glen]'s birthday party [QUERY] ('Clarence', 'Glen')",
+              "true": "grandson",
+              "predicted": "grandson",
+              "confidence": 1.0,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[Tony] woke up on his 7th birthday to a surprise present sitting on his night stand. It was from his Grandma [Ashley], and [Tony]'s sister [Charlotte] looked on excitedly as he opened his present. [QUERY] ('Ashley', 'Charlotte')",
+              "true": "granddaughter",
+              "predicted": "granddaughter",
+              "confidence": 1.0,
+              "group": "2",
+              "correct": true
+            }
+          ]
+        }
+      },
+      "transformer_small": {
+        "parameters": 781842,
+        "best_val_acc": 0.7059999995231628,
+        "final_val": {
+          "loss": 0.7588032538890839,
+          "acc": 0.7059999995231628
+        },
+        "history": {
+          "train_loss": [
+            2.240714054107666,
+            1.6584604988098144,
+            1.3329240565299987,
+            0.9706304874420166,
+            0.7400996329784393,
+            0.6008348491191864
+          ],
+          "train_acc": [
+            0.2526666672080755,
+            0.4006666655540466,
+            0.5054166672229767,
+            0.6435833320617675,
+            0.7214166703224182,
+            0.78025
+          ],
+          "val_loss": [
+            1.8104102067947387,
+            1.6154987688064575,
+            1.1773648915290833,
+            0.9081362390518188,
+            0.8138502113819123,
+            0.7588032538890839
+          ],
+          "val_acc": [
+            0.3413333353996277,
+            0.42600000071525573,
+            0.5536666665077209,
+            0.6383333292007446,
+            0.6753333344459533,
+            0.7059999995231628
+          ]
+        },
+        "test": {
+          "acc": 0.21851145038167938,
+          "total": 1048,
+          "by_group": {
+            "10": {
+              "acc": 0.09836065573770492,
+              "total": 122
+            },
+            "2": {
+              "acc": 0.631578947368421,
+              "total": 38
+            },
+            "3": {
+              "acc": 0.7383177570093458,
+              "total": 107
+            },
+            "4": {
+              "acc": 0.5324675324675324,
+              "total": 77
+            },
+            "5": {
+              "acc": 0.13513513513513514,
+              "total": 185
+            },
+            "6": {
+              "acc": 0.047619047619047616,
+              "total": 105
+            },
+            "7": {
+              "acc": 0.12258064516129032,
+              "total": 155
+            },
+            "8": {
+              "acc": 0.08148148148148149,
+              "total": 135
+            },
+            "9": {
+              "acc": 0.10483870967741936,
+              "total": 124
+            }
+          },
+          "samples": [
+            {
+              "text": "[Clarence]'s granddaughter, [Emily], was busy helping her brother, [Michael], move to college. [QUERY] ('Clarence', 'Michael')",
+              "true": "grandson",
+              "predicted": "grandson",
+              "confidence": 0.7789,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[Emily] and her granddaughter [Ashley] went to the mall [Michael] likes to visit his sister. Her name is [Emily]. [QUERY] ('Ashley', 'Michael')",
+              "true": "grandson",
+              "predicted": "grandmother",
+              "confidence": 0.4485,
+              "group": "2",
+              "correct": false
+            },
+            {
+              "text": "[Tony] and his sister, [June], went to a sneak preview of the Avengers movie and loved it. [Clarence] has 3 children, and one grandson. The Grandsons name is [Tony] [QUERY] ('Clarence', 'June')",
+              "true": "granddaughter",
+              "predicted": "granddaughter",
+              "confidence": 0.6598,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[Glen] is [Emily]'s brand new Baby brother. [Clarence] was excited to have a new Grandchild beside [Emily] [QUERY] ('Clarence', 'Glen')",
+              "true": "grandson",
+              "predicted": "grandson",
+              "confidence": 0.7444,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[June] and [Nicolas] are siblings who are enjoying lunch together. [Clarence] bought a train set for his grandson [Nicolas]. [QUERY] ('Clarence', 'June')",
+              "true": "granddaughter",
+              "predicted": "grandson",
+              "confidence": 0.4482,
+              "group": "2",
+              "correct": false
+            },
+            {
+              "text": "[Clarence] went to the museum with his grandson [Jeff]. [Jeff] and [Louise] asked their mother, if they could go play in the pool. [QUERY] ('Clarence', 'Louise')",
+              "true": "granddaughter",
+              "predicted": "granddaughter",
+              "confidence": 0.8051,
+              "group": "2",
+              "correct": true
+            },
+            {
+              "text": "[Emily]'s grandfather [Clarence] recently passed away. She is taking a leave of absence. [Emily] went to her brother [Glen]'s birthday party [QUERY] ('Clarence', 'Glen')",
+              "true": "grandson",
+              "predicted": "grandfather",
+              "confidence": 0.9067,
+              "group": "2",
+              "correct": false
+            },
+            {
+              "text": "[Tony] woke up on his 7th birthday to a surprise present sitting on his night stand. It was from his Grandma [Ashley], and [Tony]'s sister [Charlotte] looked on excitedly as he opened his present. [QUERY] ('Ashley', 'Charlotte')",
+              "true": "granddaughter",
+              "predicted": "granddaughter",
+              "confidence": 0.6059,
+              "group": "2",
+              "correct": true
+            }
+          ]
+        }
+      }
+    },
+    "dataset_config": "gen_train234_test2to10"
+  }
+}
