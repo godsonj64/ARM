@@ -1,0 +1,440 @@
+{
+  "benchmark": "facebook_babi",
+  "source_url": "https://s3.amazonaws.com/text-datasets/babi_tasks_1-20_v1-2.tar.gz",
+  "tasks": [
+    16
+  ],
+  "language_dir": "en-10k",
+  "labels": [
+    "gray",
+    "green",
+    "white",
+    "yellow"
+  ],
+  "vocab_size": 22,
+  "args": {
+    "babi_data_dir": "data_babi",
+    "babi_language_dir": "en-10k",
+    "babi_tasks": [
+      16
+    ],
+    "max_train_per_task": 10000,
+    "max_test_per_task": 10000,
+    "val_fraction": 0.15,
+    "max_vocab": 30000,
+    "max_len": 192,
+    "epochs": 25,
+    "batch_size": 128,
+    "dim": 128,
+    "num_operators": 8,
+    "tau": 0.45,
+    "transformer_dim": null,
+    "transformer_heads": 4,
+    "transformer_layers": 4,
+    "transformer_ff_dim": 512,
+    "use_cls_token": true,
+    "match_parameters": true,
+    "match_min_dim": 64,
+    "match_max_dim": 160,
+    "match_dim_step": 8,
+    "match_min_layers": 1,
+    "match_max_layers": 6,
+    "match_min_ff_dim": 32,
+    "match_max_ff_dim": 768,
+    "match_ff_dim_step": 16,
+    "match_heads": [
+      2,
+      4,
+      8
+    ],
+    "dropout": 0.15,
+    "lr": 0.002,
+    "weight_decay": 0.0001,
+    "cycle_weight": 0.003,
+    "cycle_order": 4,
+    "op_weight": 0.001,
+    "clip": 1.0,
+    "seed": 42,
+    "num_samples": 5,
+    "device": "cpu",
+    "out_dir": "benchmark_results/pure_models_babi_en10k_task16",
+    "resolved_transformer_dim": 72,
+    "resolved_transformer_heads": 2,
+    "resolved_transformer_layers": 2,
+    "resolved_transformer_ff_dim": 544
+  },
+  "parameter_match": {
+    "target_model": "pure_arm",
+    "target_parameters": 202632,
+    "transformer_dim": 72,
+    "transformer_heads": 2,
+    "transformer_layers": 2,
+    "transformer_ff_dim": 544
+  },
+  "models": {
+    "pure_arm": {
+      "parameters": 202632,
+      "best_val_acc": 0.48466666611035664,
+      "final_val": {
+        "loss": 0.8809621454874674,
+        "acc": 0.46599999992052715
+      },
+      "history": {
+        "train_loss": [
+          2.0659253235424266,
+          1.390069663216086,
+          1.1996305047203513,
+          1.0739895515441895,
+          1.0754012543173397,
+          1.0320417464761173,
+          0.9936565799152149,
+          0.9973230625601376,
+          0.956183074053596,
+          0.937373828719644,
+          0.941375423599692,
+          0.9299769686250126,
+          0.9261070378527921,
+          0.9189773207832785,
+          0.9108699540530935,
+          0.9062966774491703,
+          0.9022132628104266,
+          0.9006214824844809,
+          0.8947827972243814,
+          0.8962848658842199,
+          0.8915079375996309,
+          0.8865136492673088,
+          0.8838226853538962,
+          0.884463430853451,
+          0.884198052406311
+        ],
+        "train_acc": [
+          0.256941176554736,
+          0.35482352932761696,
+          0.44023529406154854,
+          0.45047058826334335,
+          0.44917647053213683,
+          0.44458823520996993,
+          0.4503529411203721,
+          0.4495294117787305,
+          0.45070588232489195,
+          0.45717647067238304,
+          0.44929411761900956,
+          0.45505882344526405,
+          0.4556470588235294,
+          0.4585882353782654,
+          0.4615294116945828,
+          0.46576470582625445,
+          0.4614117646217346,
+          0.46423529404752395,
+          0.4695294116945828,
+          0.4616470588796279,
+          0.47258823530814226,
+          0.4690588234592887,
+          0.47764705871133245,
+          0.4737647058823529,
+          0.47647058824931876
+        ],
+        "val_loss": [
+          1.3701401878992716,
+          1.328303936958313,
+          1.1097603721618652,
+          1.0317677892049153,
+          1.0408379952112834,
+          0.9573821921348572,
+          0.9271700388590495,
+          0.9228049920399983,
+          0.9023747291564942,
+          0.9089918168385823,
+          0.9061100970904032,
+          0.9269908145268758,
+          0.8881174027125041,
+          0.8984395666122437,
+          0.9024052809079488,
+          0.896176387945811,
+          0.8886801451047261,
+          0.881694222609202,
+          0.8989916078249613,
+          0.8901242860158285,
+          0.8810656536420186,
+          0.8848844181696573,
+          0.8804995369911194,
+          0.8809946999549866,
+          0.8809621454874674
+        ],
+        "val_acc": [
+          0.31400000087420143,
+          0.4453333334128062,
+          0.43533333293596904,
+          0.4360000007947286,
+          0.4273333330949148,
+          0.4486666659514109,
+          0.46266666674613954,
+          0.45866666579246523,
+          0.44333333245913187,
+          0.44000000031789144,
+          0.43266666611035665,
+          0.42933333349227903,
+          0.48466666611035664,
+          0.4526666669050852,
+          0.42999999912579856,
+          0.4413333332538605,
+          0.4566666665871938,
+          0.4740000006357829,
+          0.4499999991257985,
+          0.44333333245913187,
+          0.4566666665871938,
+          0.43066666754086813,
+          0.4573333334128062,
+          0.47200000007947285,
+          0.46599999992052715
+        ]
+      },
+      "test": {
+        "acc": 0.474,
+        "total": 1000,
+        "by_task": {
+          "16": {
+            "acc": 0.474,
+            "total": 1000
+          }
+        },
+        "by_support_count": {
+          "3": {
+            "acc": 0.474,
+            "total": 1000
+          }
+        },
+        "samples": [
+          {
+            "text": "lily is a swan. bernhard is a lion. greg is a swan. bernhard is white. brian is a lion. lily is gray. julius is a rhino. julius is gray. greg is gray. [QUERY] what color is brian?",
+            "true": "white",
+            "predicted": "gray",
+            "confidence": 0.6002,
+            "task_id": 16,
+            "support_count": 3,
+            "correct": false
+          },
+          {
+            "text": "lily is a rhino. brian is a swan. bernhard is a swan. lily is gray. brian is white. bernhard is white. julius is a frog. julius is white. greg is a frog. [QUERY] what color is greg?",
+            "true": "white",
+            "predicted": "white",
+            "confidence": 0.6478,
+            "task_id": 16,
+            "support_count": 3,
+            "correct": true
+          },
+          {
+            "text": "bernhard is a rhino. brian is a rhino. bernhard is white. brian is white. lily is a lion. lily is yellow. greg is a rhino. greg is green. julius is a rhino. [QUERY] what color is julius?",
+            "true": "green",
+            "predicted": "green",
+            "confidence": 0.3625,
+            "task_id": 16,
+            "support_count": 3,
+            "correct": true
+          },
+          {
+            "text": "greg is a frog. bernhard is a swan. julius is a frog. bernhard is white. julius is green. lily is a frog. brian is a frog. lily is gray. brian is gray. [QUERY] what color is greg?",
+            "true": "gray",
+            "predicted": "gray",
+            "confidence": 0.369,
+            "task_id": 16,
+            "support_count": 3,
+            "correct": true
+          },
+          {
+            "text": "julius is a swan. julius is gray. bernhard is a swan. bernhard is yellow. brian is a lion. greg is a lion. brian is white. lily is a frog. lily is gray. [QUERY] what color is greg?",
+            "true": "white",
+            "predicted": "gray",
+            "confidence": 0.3599,
+            "task_id": 16,
+            "support_count": 3,
+            "correct": false
+          }
+        ]
+      },
+      "checkpoint": "benchmark_results/pure_models_babi_en10k_task16/pure_arm_babi.pt"
+    },
+    "pure_transformer": {
+      "parameters": 202764,
+      "best_val_acc": 0.47800000047683716,
+      "final_val": {
+        "loss": 0.8808113520940145,
+        "acc": 0.45200000071525576
+      },
+      "history": {
+        "train_loss": [
+          1.2573478367749382,
+          1.009327700839323,
+          0.9426457504384658,
+          0.9187832636552699,
+          0.9052789145918454,
+          0.9029560119404513,
+          0.902684916860917,
+          0.8950844012428733,
+          0.8947378141459297,
+          0.8932551027185777,
+          0.890253701434416,
+          0.8887221077750711,
+          0.8893469476138844,
+          0.8855291875109953,
+          0.8823274298275219,
+          0.8794903573428883,
+          0.8788197641653173,
+          0.8798651867473827,
+          0.8760010520710665,
+          0.8809754306849311,
+          0.8742271237653845,
+          0.8721323835429023,
+          0.8719630993955275,
+          0.8719144912607529,
+          0.8699571031121647
+        ],
+        "train_acc": [
+          0.3875294117647059,
+          0.46176470581222984,
+          0.4572941175769357,
+          0.4557647059244268,
+          0.46482352949591244,
+          0.4632941175629111,
+          0.46058823529411763,
+          0.4622352940895978,
+          0.46223529403349933,
+          0.464470588165171,
+          0.45847058823529413,
+          0.46164705885157864,
+          0.4657647059104022,
+          0.4663529410642736,
+          0.47576470596650067,
+          0.483176470672383,
+          0.48058823546241314,
+          0.4777647059244268,
+          0.4856470587674309,
+          0.4708235294257893,
+          0.48011764707284815,
+          0.4850588235434364,
+          0.4848235294257893,
+          0.489058823445264,
+          0.4904705882072449
+        ],
+        "val_loss": [
+          1.0470746126174926,
+          0.9232448008855184,
+          0.8938232781092326,
+          0.8919812318483988,
+          0.887346665541331,
+          0.8906553915341695,
+          0.8976016810735067,
+          0.8910975753466288,
+          0.8913274343808492,
+          0.8951662241617838,
+          0.8887686624526977,
+          0.8881123420397441,
+          0.8938913488388062,
+          0.8846767784754436,
+          0.8883231296539307,
+          0.8916893510818481,
+          0.8828701769510905,
+          0.8814791730244954,
+          0.8837746313412984,
+          0.8822141350110372,
+          0.88189137951533,
+          0.8821339535713196,
+          0.882512238184611,
+          0.8810721219380696,
+          0.8808113520940145
+        ],
+        "val_acc": [
+          0.45000000047683714,
+          0.4439999996026357,
+          0.4666666666666667,
+          0.44399999992052713,
+          0.4733333334128062,
+          0.44999999944368996,
+          0.4220000003973643,
+          0.46666666690508524,
+          0.45933333365122475,
+          0.4493333337306976,
+          0.4586666665871938,
+          0.4493333326180776,
+          0.4479999992052714,
+          0.45333333357175193,
+          0.4460000003973643,
+          0.46333333325386045,
+          0.46399999944368997,
+          0.45066666722297666,
+          0.47800000047683716,
+          0.46999999992052716,
+          0.4699999997615814,
+          0.45200000071525576,
+          0.4486666672229767,
+          0.45000000071525575,
+          0.45200000071525576
+        ]
+      },
+      "test": {
+        "acc": 0.487,
+        "total": 1000,
+        "by_task": {
+          "16": {
+            "acc": 0.487,
+            "total": 1000
+          }
+        },
+        "by_support_count": {
+          "3": {
+            "acc": 0.487,
+            "total": 1000
+          }
+        },
+        "samples": [
+          {
+            "text": "lily is a swan. bernhard is a lion. greg is a swan. bernhard is white. brian is a lion. lily is gray. julius is a rhino. julius is gray. greg is gray. [QUERY] what color is brian?",
+            "true": "white",
+            "predicted": "gray",
+            "confidence": 0.5243,
+            "task_id": 16,
+            "support_count": 3,
+            "correct": false
+          },
+          {
+            "text": "lily is a rhino. brian is a swan. bernhard is a swan. lily is gray. brian is white. bernhard is white. julius is a frog. julius is white. greg is a frog. [QUERY] what color is greg?",
+            "true": "white",
+            "predicted": "white",
+            "confidence": 0.6566,
+            "task_id": 16,
+            "support_count": 3,
+            "correct": true
+          },
+          {
+            "text": "bernhard is a rhino. brian is a rhino. bernhard is white. brian is white. lily is a lion. lily is yellow. greg is a rhino. greg is green. julius is a rhino. [QUERY] what color is julius?",
+            "true": "green",
+            "predicted": "green",
+            "confidence": 0.4049,
+            "task_id": 16,
+            "support_count": 3,
+            "correct": true
+          },
+          {
+            "text": "greg is a frog. bernhard is a swan. julius is a frog. bernhard is white. julius is green. lily is a frog. brian is a frog. lily is gray. brian is gray. [QUERY] what color is greg?",
+            "true": "gray",
+            "predicted": "gray",
+            "confidence": 0.3892,
+            "task_id": 16,
+            "support_count": 3,
+            "correct": true
+          },
+          {
+            "text": "julius is a swan. julius is gray. bernhard is a swan. bernhard is yellow. brian is a lion. greg is a lion. brian is white. lily is a frog. lily is gray. [QUERY] what color is greg?",
+            "true": "white",
+            "predicted": "white",
+            "confidence": 0.3552,
+            "task_id": 16,
+            "support_count": 3,
+            "correct": true
+          }
+        ]
+      },
+      "checkpoint": "benchmark_results/pure_models_babi_en10k_task16/pure_transformer_babi.pt"
+    }
+  }
+}
