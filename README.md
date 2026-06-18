@@ -104,9 +104,35 @@ benchmark_results/multihop_full_eval/full_eval_summary.json
 
 ### CLUTRR chain-length finding
 
+#### Held-out accuracy by chain length
+
 ![CLUTRR held-out accuracy by chain length](benchmark_results/multihop_clutrr_6/clutrr_test_multihop_test_by_length.png)
 
 For `gen_train234_test2to10`, CLUTRR trains only on chain lengths 2, 3, and 4, while the held-out test split contains chain lengths 2 through 10. Strong accuracy on lengths 2-4 followed by a drop on lengths 5-10 indicates the model learned the training chain distribution but still struggles with out-of-distribution longer-chain generalization.
+
+#### Validation curves
+
+![CLUTRR validation curves](benchmark_results/multihop_clutrr_6/clutrr_test_multihop_validation_curves.png)
+
+Validation contains the same chain lengths as training, so high validation accuracy should be interpreted as in-distribution fit rather than proof of long-chain generalization.
+
+#### Label mapping
+
+![CLUTRR label mapping](benchmark_results/multihop_clutrr_6/clutrr_test_label_mapping.png)
+
+The label mapping shows the kinship relation classes used by the classifier heads.
+
+#### Sample predictions
+
+![CLUTRR sample predictions](benchmark_results/multihop_clutrr_6/clutrr_test_sample_predictions.png)
+
+Sample predictions provide concrete examples of true labels, predicted labels, confidence, and whether each model was correct.
+
+#### bAbI validation curve
+
+![bAbI validation curve](benchmark_results/babi_curves.png)
+
+bAbI tasks 2 and 3 provide an additional auto-downloaded inductive QA check grouped by supporting-fact count.
 
 The script automatically:
 
