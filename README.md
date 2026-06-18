@@ -1,91 +1,97 @@
 # Algebraic Resonance Memory (ARM)
 
-Algebraic Resonance Memory is a PyTorch research prototype for memory retrieval through learned algebraic transformations rather than direct query-key similarity alone.
+Algebraic Resonance Memory is a PyTorch research prototype for **transformation-mediated memory retrieval**. Standard attention retrieves by direct query-key similarity. ARM retrieves by applying a learned family of algebraic operators to the query and aggregating the resonance of all transformed paths that reach each memory atom.
 
-The central idea is that a single memory can be retrieved by multiple different cues when those cues converge to the same latent memory point through a family of learned operators. The motivating example is a cyclic pull-rope fan switch: each pull updates a hidden state, while the brain may retrieve the current state through motor rhythm, airflow, sound, partial count, or expectation.
+## Core equation
 
-## Core retrieval equation
-
-For a query `q`, memory atom `m_i`, and learned operator family `A_k`, ARM computes:
+For query `q`, memory atom `m_i`, and learned operators `A_k`, ARM computes:
 
 ```text
 rho(q, m_i) = logsumexp_k( -||A_k q + b_k - m_i||^2_D / tau - c_k )
+R(q)        = softmax_i(rho(q, m_i)) M
 ```
 
-The retrieved memory is:
+This allows different cue forms, relational paths, or temporal states to converge to the same latent memory.
+
+## Repository structure
 
 ```text
-R(q) = softmax_i(rho(q, m_i)) M
+arm/
+  __init__.py              Public package exports
+  models.py                ARM layer, attention baseline, encoders
+  synthetic.py             Cyclic fan-state dataset
+
+benchmarks/
+  synthetic_compare.py     ARM vs direct attention on cyclic hidden-state retrieval
+  clutrr_compare.py        ARM vs direct attention on CLUTRR kinship reasoning
+
+arm_colab_runnable.py      Original synthetic Colab script
+arm_clutrr_colab.py        Original CLUTRR Colab script
+arm_colab_runnable.ipynb   Main Colab launcher for benchmark comparison
+run_colab_benchmarks.ipynb Additional Colab benchmark launcher
+requirements.txt           Python dependencies
 ```
 
-This lets different transformed versions of a query retrieve the same memory atom.
-
-## Benchmarks included
-
-### 1. Synthetic cyclic fan-state benchmark
-
-`arm_colab_runnable.py` tests ARM on the original cyclic hidden-state idea. Multiple cues point to the same hidden fan state.
-
-### 2. Real bAbI memory QA benchmark
-
-`arm_babi_colab.py` trains ARM on the official Facebook bAbI task archive. The default task is Task 2, two supporting facts, which tests multi-hop memory retrieval from short stories.
-
-The bAbI script includes:
-
-- Official bAbI archive download
-- Safe archive extraction
-- bAbI task parser
-- Word-level tokenizer
-- GRU text encoder
-- ARM answer-memory classifier
-- Learned algebraic operator bank
-- Multi-path resonance retrieval
-- Cycle-consistency regularization
-- Validation accuracy reporting
-- Checkpoint saving as `arm_babi_checkpoint.pt`
-
-### 3. CLUTRR experimental script
-
-`arm_clutrr_colab.py` remains in the repository as an experimental script, but CLUTRR is not available through Hugging Face as `clutrr`. The Colab launcher therefore uses bAbI as the dependable real benchmark.
-
-## Run bAbI in Google Colab
-
-Open `arm_colab_runnable.ipynb` in Colab and run the single code cell.
-
-The notebook clones this repository, runs `arm_babi_colab.py`, plots learning curves, and saves a checkpoint.
-
-## Run bAbI locally
+## Install
 
 ```bash
 pip install -r requirements.txt
-python arm_babi_colab.py
 ```
 
-## Run the synthetic benchmark locally
+## Benchmark 1: synthetic cyclic fan-state retrieval
+
+This benchmark tests the original ARM idea: multiple cue types retrieve the same hidden cyclic state.
 
 ```bash
-pip install -r requirements.txt
-python arm_colab_runnable.py
+python benchmarks/synthetic_compare.py --epochs 20
 ```
 
-Both scripts automatically use CUDA when available.
-
-## Files
+Outputs:
 
 ```text
-arm_babi_colab.py           Real bAbI memory QA benchmark
-arm_clutrr_colab.py         Experimental CLUTRR script
-arm_colab_runnable.py       Synthetic cyclic fan-state benchmark
-arm_colab_runnable.ipynb    Colab launcher for bAbI
-requirements.txt            Python dependencies
-.gitignore                  Ignore generated checkpoints and caches
-LICENSE                     MIT license
+benchmark_results/synthetic_compare.json
+benchmark_results/synthetic_learning_curves.png
 ```
 
-## Research status
+The script trains two models under the same setup:
 
-This is a research prototype. The synthetic benchmark tests whether ARM can retrieve one hidden memory from multiple cue forms. The bAbI benchmark tests whether ARM can learn text-based multi-hop memory retrieval on a real public QA dataset. It is not yet a replacement for transformer attention on large-scale language tasks.
+1. `attention`: direct query-memory attention baseline.
+2. `arm`: Algebraic Resonance Memory with learned operator paths.
 
-## Author
+## Benchmark 2: CLUTRR real-dataset comparison
 
-Concept and implementation direction: Godson Johnson
+This benchmark downloads CLUTRR from Hugging Face and compares ARM against direct attention on kinship-relation reasoning.
+
+```bash
+python benchmarks/clutrr_compare.py --epochs 8
+```
+
+Outputs:
+
+```text
+benchmark_results/clutrr_compare.json
+benchmark_results/clutrr_learning_curves.png
+```
+
+## Run in Google Colab
+
+Open either notebook:
+
+```text
+arm_colab_runnable.ipynb
+run_colab_benchmarks.ipynb
+```
+
+The notebooks clone this repository, install requirements, and run both benchmark scripts.
+
+## Notes on interpretation
+
+The benchmark scripts are intended to test whether ARM's transformed-query retrieval offers advantages over direct attention under controlled conditions. They do not prove general superiority over Transformer attention. Stronger claims require repeated runs, confidence intervals, tuned baselines, and larger-scale experiments.
+
+## Paper
+
+The theoretical manuscript frames ARM as a transformation-mediated retrieval scoring principle, not as a replacement for all attention mechanisms.
+
+## License
+
+MIT License.
