@@ -143,8 +143,15 @@ def save_diagnostic_pngs(results: Dict[str, Any], out_dir: Path) -> None:
         ax.set_ylim(0.0, 1.0)
         ax.grid(True, axis="y", alpha=0.3)
         ax.legend()
+        if bench == "clutrr_test":
+            caption = (
+                "CLUTRR gen_train234_test2to10 trains only on chain lengths 2-4; "
+                "held-out test includes lengths 2-10. The drop after length 4 "
+                "therefore measures out-of-distribution longer-chain generalization."
+            )
+            fig.text(0.5, -0.03, caption, ha="center", va="top", fontsize=8, wrap=True)
         fig.tight_layout()
-        fig.savefig(out_dir / f"{bench}_multihop_test_by_length.png", dpi=170, bbox_inches="tight")
+        fig.savefig(out_dir / f"{bench}_multihop_test_by_length.png", dpi=170, bbox_inches="tight", pad_inches=0.35)
         plt.close(fig)
 
         label_rows = [[idx, label] for idx, label in enumerate(result.get("labels", []))]

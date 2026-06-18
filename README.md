@@ -102,6 +102,12 @@ benchmark_results/multihop_full_eval/babi_25/
 benchmark_results/multihop_full_eval/full_eval_summary.json
 ```
 
+### CLUTRR chain-length finding
+
+![CLUTRR held-out accuracy by chain length](benchmark_results/multihop_clutrr_6/clutrr_test_multihop_test_by_length.png)
+
+For `gen_train234_test2to10`, CLUTRR trains only on chain lengths 2, 3, and 4, while the held-out test split contains chain lengths 2 through 10. Strong accuracy on lengths 2-4 followed by a drop on lengths 5-10 indicates the model learned the training chain distribution but still struggles with out-of-distribution longer-chain generalization.
+
 The script automatically:
 
 - downloads CLUTRR,
