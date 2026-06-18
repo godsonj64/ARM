@@ -1,0 +1,313 @@
+{
+  "dataset_path": "/Users/godsonjohnson/CLUTTER2.0",
+  "labels": [
+    "aunt",
+    "brother",
+    "daughter",
+    "daughter-in-law",
+    "father-in-law",
+    "granddaughter",
+    "grandfather",
+    "grandmother",
+    "grandson",
+    "mother-in-law",
+    "nephew",
+    "niece",
+    "sister",
+    "son",
+    "son-in-law",
+    "uncle"
+  ],
+  "vocab_size": 444,
+  "splits": {
+    "train": 160,
+    "validation": 20,
+    "test": 20
+  },
+  "args": {
+    "data_path": "/Users/godsonjohnson/CLUTTER2.0",
+    "max_train": 12000,
+    "max_eval": 3000,
+    "max_test": 3000,
+    "val_fraction": 0.15,
+    "strict_columns": false,
+    "max_vocab": 30000,
+    "max_len": 512,
+    "epochs": 1,
+    "batch_size": 8,
+    "emb_dim": 128,
+    "hidden_dim": 128,
+    "latent_dim": 128,
+    "num_operators": 8,
+    "tau": 0.45,
+    "transformer_spec": "tiny",
+    "dropout": 0.15,
+    "lr": 0.002,
+    "weight_decay": 0.0001,
+    "cycle_weight": 0.003,
+    "cycle_order": 4,
+    "op_weight": 0.001,
+    "clip": 1.0,
+    "seed": 42,
+    "num_samples": 3,
+    "inspect_top_k": 3,
+    "device": "cpu",
+    "out_dir": "benchmark_results/clutter2_local_smoke"
+  },
+  "models": {
+    "arm": {
+      "parameters": 456456,
+      "best_val_acc": 0.1,
+      "final_val": {
+        "loss": 3.635750675201416,
+        "acc": 0.1
+      },
+      "history": {
+        "train_loss": [
+          4.348034811019898
+        ],
+        "train_acc": [
+          0.125
+        ],
+        "val_loss": [
+          3.635750675201416
+        ],
+        "val_acc": [
+          0.1
+        ]
+      },
+      "test": {
+        "acc": 0.3,
+        "total": 20,
+        "by_group": {
+          "task_k2.medium": {
+            "acc": 0.0,
+            "total": 3
+          },
+          "task_k3.medium": {
+            "acc": 0.4,
+            "total": 5
+          },
+          "task_k4.medium": {
+            "acc": 0.3333333333333333,
+            "total": 3
+          },
+          "task_k5.medium": {
+            "acc": 0.0,
+            "total": 4
+          },
+          "task_k6.medium": {
+            "acc": 0.6,
+            "total": 5
+          }
+        }
+      }
+    },
+    "transformer": {
+      "parameters": 95824,
+      "best_val_acc": 0.1,
+      "final_val": {
+        "loss": 2.378650999069214,
+        "acc": 0.1
+      },
+      "history": {
+        "train_loss": [
+          2.51686931848526
+        ],
+        "train_acc": [
+          0.175
+        ],
+        "val_loss": [
+          2.378650999069214
+        ],
+        "val_acc": [
+          0.1
+        ]
+      },
+      "test": {
+        "acc": 0.15,
+        "total": 20,
+        "by_group": {
+          "task_k2.medium": {
+            "acc": 0.3333333333333333,
+            "total": 3
+          },
+          "task_k3.medium": {
+            "acc": 0.2,
+            "total": 5
+          },
+          "task_k4.medium": {
+            "acc": 0.0,
+            "total": 3
+          },
+          "task_k5.medium": {
+            "acc": 0.25,
+            "total": 4
+          },
+          "task_k6.medium": {
+            "acc": 0.0,
+            "total": 5
+          }
+        }
+      }
+    }
+  },
+  "samples": [
+    {
+      "sample": 0,
+      "text": "[Arthur] is the son of [Anna]. [Raymond], the husband of [Carol], is well liked and collects vintage postcards. [Kimberly] is the daughter of [Debra]. Everyone in town knows [Angela] is the sister of [Cynthia]. [Brandon] has a son named [Kevin] and is fond of old jazz records. [Patrick] has a daughter named [Elizabeth]. [Kenneth] is the brother of [Evelyn] and works at the city library. [Elizabeth] has a daughter named [Sandra] and has a fondness for crossword puzzles. [Kimberly] is also the daughter of [Thomas]. [Cindy] is the daughter of [Paul]. [Aaron] has a son named [Lawrence] and studied architecture abroad. [Samuel] is the son of [Larry]. Everyone in town knows [David] is the son of [Kimberly] and is fond of old jazz records. [Adam]\u2019s daughter is [Catherine]. [Mary] is the daughter of [Larry] and rarely misses a local football match. [Donna] is the mother of [Emma] and has a fondness for crossword puzzles. [Adam]\u2019s daughter is also [Kathleen]. [Victoria]\u2019s husband is [Brian] and is fond of old jazz records.\n\nIn town, it is well known that [Joshua] is the son of [Raymond] and also the son of [Carol]. [Amy] is widely known as the daughter of [Dorothy] and also the daughter of [Kevin], and she spends summers near the coast. [Elizabeth] has a son named [Roger], runs a small bakery downtown, and is the wife of [Peter]. [Evelyn] has a brother named [Douglas], and she spends summers near the coast. [Carolyn]\u2019s sister is [Kimberly]. [Katherine] is the daughter of [Scott]. [Gary]\u2019s daughter is [Cynthia]. Everyone knows [Douglas] is the son of [Kelly] and volunteers at the animal shelter on weekends. [Larry] is known as the son of [Douglas] and runs a small bakery downtown. [Shirley] has a daughter named [Linda]. [Peter] has a daughter named [Sarah]. [Michael]\u2019s wife is [Shirley], and he keeps a small vegetable garden; [Michael] also has a daughter named [Linda] and keeps a small vegetable garden. [Kelly]\u2019s husband is [Steven]. [Samuel] is known as the brother of [Deborah] and keeps a small vegetable garden.\n\n[Douglas], who runs a small bakery downtown, is the husband of [Jessica], and everyone in town knows that. [Douglas]'s son is [Charles], who is fond of old jazz records. [Douglas] is also the brother of [Kenneth], a fact known to everyone in town. [Nicole]'s husband is [Joshua], and everyone in town knows that [Shirley] is the daughter of [Nicole]. [Angela] is the daughter of [Linda]. [Thomas]'s daughter is [Carolyn]. [Joseph]'s son is [Steven], and [Evelyn] is the daughter of [Steven]. [Aaron]'s wife is [Sandra], and [Sandra]'s sister is [Sarah]. [Samuel] is the son of [Brenda]. [Tyler] is the father of [Donna], and he works at the city library. [Brandon] has a daughter named [Samantha], and everyone in town knows that [Catherine] is the daughter of [Samantha]. [Elizabeth] is the daughter of [Joyce]. Everyone in town knows that [Cindy] is the daughter of [Sharon], and that [Karen] is the sister of [Katherine].\n\n[Evelyn]'s son is [Paul], who runs a small bakery downtown, and she also has another son named [Kevin]. [Brenda] has a daughter named [Mary], and volunteers at the animal shelter on weekends; [Deborah] is the daughter of [Brenda]. [Debra]'s daughter is [Carolyn], and everyone in town knows [Thomas] is the husband of [Debra]. [Julie]'s husband is [Joseph]. [Joshua] has a daughter named [Heather]. [Kevin], the husband of [Dorothy], is well liked. [Steven]'s son is [Kenneth]. [Kimberly]'s son is [Walter]. [Linda]'s son is [Matthew]. Everyone in town knows [Karen] is the daughter of [Rebecca], and collects vintage postcards. Everyone in town knows [Roger] is the son of [Peter]; [Roger] has a son named [Arthur] and a sister named [Sarah]. Everyone in town knows [Frank] is the son of [Gregory], and rarely misses a local football match. Everyone in town knows [Kathleen] is the sister of [Catherine].\n\n[Kyle] is the son of [Kenneth]. [Brian] has a daughter named [Jennifer], and studied architecture abroad. [Tyler]'s daughter is [Pamela]. [Linda], the wife of [Gary], is well liked, and teaches piano in the evenings. [Deborah]'s sister is [Mary], and volunteers at the animal shelter on weekends. [Joshua]'s daughter is [Shirley]. [Scott] is the husband of [Rebecca]. [Gary]'s son is [Matthew]. Everyone in town knows [Angela] is the sister of [Matthew]. Everyone in town knows [Samantha] is the daughter of [Evelyn]. Everyone in town knows [Sandra] is the sister of [Roger]. [Samantha] is the wife of [Adam], and works at the city library. [Lawrence] is the son of [Sandra]. Everyone in town knows [Cynthia] is the daughter of [Linda]. Everyone in town knows [Charles] is the son of [Jessica], and is fond of old jazz records. [Matthew]'s sister is [Cynthia], and recently took up watercolor painting. [Kyle] is the son of [Helen]. [Jennifer] is the daughter of [Victoria], and has a fondness for crossword puzzles.\n\n[Larry]'s daughter is [Deborah], and she studied architecture abroad. [Kevin] has a brother named [Paul]. [Jessica]'s son is [Larry]. [Katherine] is the daughter of [Rebecca]. [Gary] has a daughter named [Angela], and he runs a small bakery downtown. [Samantha]'s brother is [Paul], and he organizes the neighborhood book club. [Anna]'s husband is [Roger]. [Jack]'s wife is [Kimberly]. Everyone in town knows [Lisa] is the daughter of [Adam]. [Larry], the husband of [Brenda], is well liked, and enjoys long walks by the river. [David] is the son of [Jack]. Everyone in town knows [Frank] is the son of [Joan]. Everyone in town knows [Sandra] is the daughter of [Peter]. Everyone in town knows [Olivia] is the sister of [Pamela]. [Kathleen] is the daughter of [Samantha]. [Lisa]'s sister is [Kathleen]. [Larry]'s brother is [Charles]. [Kelly] has a son named [Kenneth].\n\n[Patrick], the husband of [Joyce], is well liked, and keeps a small vegetable garden. [Scott] has a daughter named [Karen], while [Joan]'s husband is [Gregory]. Everyone in town knows [Lisa] is the daughter of [Samantha], and [Lisa]'s sister is [Catherine], who volunteers at the animal shelter on weekends. [Jack] has a son named [Walter], and [Steven] is the son of [Julie]. [Elizabeth] has a daughter named [Sarah] and works at the city library. [Douglas] is the son of [Steven] and has a fondness for crossword puzzles. Everyone in town knows [Evelyn] is the wife of [Brandon]. [QUERY] ('Emma', 'Olivia')",
+      "true": "aunt",
+      "group": "task_k4.medium",
+      "predictions": {
+        "arm": {
+          "predicted": "nephew",
+          "confidence": 0.4634,
+          "top_memory_atoms": [
+            {
+              "label": "nephew",
+              "memory_id": 10,
+              "weight": 0.4634,
+              "logit": -87.2627
+            },
+            {
+              "label": "aunt",
+              "memory_id": 0,
+              "weight": 0.1705,
+              "logit": -88.2626
+            },
+            {
+              "label": "niece",
+              "memory_id": 11,
+              "weight": 0.1179,
+              "logit": -88.6313
+            }
+          ],
+          "top_operator_paths": [
+            {
+              "operator_id": 1,
+              "path_score": -87.2627
+            },
+            {
+              "operator_id": 3,
+              "path_score": -223.1297
+            },
+            {
+              "operator_id": 2,
+              "path_score": -239.5815
+            }
+          ],
+          "correct": false
+        },
+        "transformer": {
+          "predicted": "nephew",
+          "confidence": 0.2071,
+          "correct": false
+        }
+      }
+    },
+    {
+      "sample": 1,
+      "text": "[Keith], the husband of [Carolyn], is well liked and fond of old jazz records. Everyone in town knows [Keith] is the son of [George]. [Joshua] is the husband of [Patricia], and [Gerald] is the son of [Joshua]. [Susan]'s brother is [Justin], and [Justin] is learning to play the cello; [Nicole] is the daughter of [Justin]. [Jacob] is the husband of [Joyce], and [Joyce]'s daughter is [Cynthia]. Everyone in town knows [Zachary] is the son of [Carol]. Everyone in town knows [Frank] is the brother of [Mary]. [Gabrielle] has a daughter named [Elizabeth]. Everyone in town knows [Emma] is the daughter of [Eric], and everyone in town knows [Donna] is the wife of [Eric] and is learning to play the cello. [Brenda] is the sister of [Roger]. [Rebecca] is the daughter of [Lawrence] and recently took up watercolor painting. [William] is the father of [Donald]. [Ashley] is the daughter of [Julie]. [James] is the husband of [Andrea].\n\n[Frank] has a daughter named [Joan]. [Charles], the husband of [Gabrielle], is well liked. Everyone in town knows [Scott] is the son of [Elizabeth], and spends summers near the coast. [Joshua] is the son of [Rachel]. [Julie]'s son is [Timothy]. [Nancy] is the daughter of [Cynthia]. [Charles] is the son of [Ryan]. Everyone in town knows [Karen] is the daughter of [Brenda]. [Susan] is the daughter of [Nicholas]. [Brenda] is the daughter of [Jeffrey], and organizes the neighborhood book club. [Gregory] is the son of [Ronald]. [Michael]'s son is [Frank]. [Jeremy] has a brother named [Gerald], and is learning to play the cello. [Karen] is the daughter of [Kenneth]. Everyone in town knows [Jeremy] is the son of [Patricia], and organizes the neighborhood book club. [James]'s daughter is [Diane]. [Nicholas]'s son is [Joshua], and collects vintage postcards. [Kimberly] is the mother of [William].\n\nIn town, it is widely known that [Ashley] is the daughter of [Stephen], and that [Stephen] is the son of [Nancy]. [Donna], who is the sister of [Keith], organizes the neighborhood book club, and [Carol]'s son is [Arthur]. Everyone knows that [Elizabeth] is the wife of [Jeffrey], and [Joan] has a brother named [Richard] while keeping a small vegetable garden. [Justin] is the son of [Nicholas] and runs a small bakery downtown, while [Harold] has a son named [Henry] and is learning to play the cello. [Susan] is known to be the daughter of [Rachel] and prefers tea over coffee; she also has a son named [Henry] and works at the city library. [Sharon]'s daughter is [Katherine], and [Rachel] has a son named [Justin]. [Nicole] is the daughter of [Carol] and organizes the neighborhood book club, while [Justin]'s brother is [Joshua]. [Jason]'s brother is [Steven], who spends summers near the coast, and everyone knows [Steven] is the son of [Paul] and keeps a small vegetable garden. [Diane], the wife of [Paul], is well liked and organizes the neighborhood book club, and [Gabrielle] has a son named [James] who recently took up watercolor painting.\n\n[Jeffrey] has a son named [Scott]. Everyone in town knows [Michelle] is the daughter of [Donna]. [Richard] is the son of [Frank], and rarely misses a local football match. [Scott] has a brother named [Roger]. Everyone in town knows [Michael] is the son of [Gabrielle], and studied architecture abroad. Everyone in town knows [Christine] is the daughter of [Kimberly], and works at the city library. Everyone in town knows [Donna] is the sister of [Katherine], and teaches piano in the evenings. Everyone in town knows [Jason] is the son of [Paul]. [Eric] has a daughter named [Michelle]. [Jack] is the son of [Susan], and keeps a small vegetable garden. [Charles]'s son is [Michael]. [Justin] has a son named [Arthur]. Everyone in town knows [Michael] is the husband of [Jessica]. [Harold]'s wife is [Susan]. Everyone in town knows [Elizabeth] is the sister of [Michael]. [George] is the husband of [Sharon], and enjoys long walks by the river. [Timothy] is the son of [Stephen]. [Michael]'s daughter is [Mary].\n\n[Brenda], who works at the city library, is the wife of [Kenneth]. Everyone in town knows that [Emma] is the daughter of [Donna] and studied architecture abroad, and that [Rachel] is the wife of [Nicholas]. [Michelle] is the wife of [Lawrence] and teaches piano in the evenings, while [Diane], the daughter of [Andrea], also teaches piano in the evenings. Everyone in town knows that [Nicole] is the sister of [Arthur]. [Betty] has a daughter named [Joan]. Everyone in town knows that [Katherine] is the daughter of [George] and keeps a small vegetable garden, and that [Michelle] is the sister of [Emma]. [Patricia] has a son named [Gerald] and is learning to play the cello. Everyone in town knows that [Rachel] is the daughter of [Carolyn], and that [Olivia] is the sister of [Christine]. [Keith] is the brother of [Katherine]. [Sharon] has a son named [Keith]. [Joshua]'s son is [Jeremy]. [Zachary] is the son of [Justin] and prefers tea over coffee. [Jack]'s brother is [Henry], and he is fond of old jazz records. [Ronald]'s wife is [Emma].\n\nIn town, everyone knows that [Steven] is the son of [Diane]. [Arthur] has a brother named [Zachary] and works at the city library. [Diane] also has a son named [Jason]. Everyone knows that [Sandra] is the sister of [Henry] and recently took up watercolor painting; [Sandra] is also the sister of [Jack]. [Susan]'s brother is [Joshua], and he is fond of old jazz records. [Jessica] has a son named [Frank]. [Cynthia] is the daughter of [Jacob] and the wife of [Aaron]. [Emma] has a son named [Gregory]. [Stephen], the husband of [Julie], is well liked, and [Stephen] is the son of [Carl]. Everyone knows that [Sandra] is the daughter of [Harold] and also the daughter of [Susan]. [Rebecca] is the daughter of [Michelle]. [Jeffrey]'s son is [Roger]. [Carol]'s husband is [Justin]. [Olivia]'s sister is [Stephanie].\n\n[George]'s daughter is [Donna], and [Sharon] also has a daughter named [Donna]. [Mary] is the daughter of [Jessica], and has a fondness for crossword puzzles. [Frank] is the husband of [Betty], and works at the city library. [Nicole]'s brother is [Zachary], and enjoys long walks by the river. [Ashley]'s brother is [Timothy]. [Heather] has a son named [Charles], and [Charles] has a son named [James], and is fond of old jazz records. [Harold]'s son is [Jack]. [Nancy] is the wife of [Carl]. [QUERY] ('Donald', 'Stephanie')",
+      "true": "aunt",
+      "group": "task_k5.medium",
+      "predictions": {
+        "arm": {
+          "predicted": "nephew",
+          "confidence": 0.4587,
+          "top_memory_atoms": [
+            {
+              "label": "nephew",
+              "memory_id": 10,
+              "weight": 0.4587,
+              "logit": -87.3865
+            },
+            {
+              "label": "aunt",
+              "memory_id": 0,
+              "weight": 0.1698,
+              "logit": -88.3801
+            },
+            {
+              "label": "niece",
+              "memory_id": 11,
+              "weight": 0.1191,
+              "logit": -88.7354
+            }
+          ],
+          "top_operator_paths": [
+            {
+              "operator_id": 1,
+              "path_score": -87.3865
+            },
+            {
+              "operator_id": 3,
+              "path_score": -223.0586
+            },
+            {
+              "operator_id": 2,
+              "path_score": -239.6431
+            }
+          ],
+          "correct": false
+        },
+        "transformer": {
+          "predicted": "aunt",
+          "confidence": 0.2644,
+          "correct": true
+        }
+      }
+    },
+    {
+      "sample": 2,
+      "text": "Everyone in town knows [Katherine] is the wife of [Samuel]. [Mark], the husband of [Sharon], is well liked. [Douglas]'s son is [Jeffrey], who teaches piano in the evenings, and [Jeffrey] is also the son of [Nicole]. [Arthur] is the brother of [Lisa]. [Kevin] has a brother named [Dennis]. [Deborah] is the daughter of [Maria]. [Julie]'s sister is [Laura], who collects vintage postcards. [Mark] has a daughter named [Mary]. [Karen] is the daughter of [Jeffrey]. [Laura] has a daughter named [Anna] and works at the city library. Everyone in town knows [Robert] is the son of [Cindy] and works at the city library. Everyone in town knows [Joan] is the mother of [Betty] and keeps a small vegetable garden. Everyone in town knows [Lisa] is the daughter of [Paul]. [Andrea] is the wife of [Gary]. [Dennis] is the brother of [Katherine] and runs a small bakery downtown. [Anthony] has a brother named [Kyle]. [Jeffrey]'s daughter is [Andrea].\n\nIn a small town where everyone knows each other, it is well known that [Debra] is the daughter of [Dennis], and that [Ruth] is the wife of [William] and keeps a small vegetable garden. [Arthur]\u2019s son is [Kyle], and everyone knows that [Rachel] is also the daughter of [Dennis]. [Mark] is the brother of [Laura], and [Maria] has a son named [Joseph]. It is common knowledge that [Robert] is the son of [Walter] and has a fondness for crossword puzzles, while [Michelle] is the daughter of [Arthur] and runs a small bakery downtown. [Dennis] is the son of [Amanda], as everyone knows, and [Ronald] has a daughter named [Dorothy]. [Lisa] is the daughter of [Karen] and teaches piano in the evenings, and [Kyle] is the brother of [Michelle]. [Elizabeth]\u2019s son is [Nicholas], and [Frank] is the brother of [Nicholas] and spends summers near the coast. [Richard] is the son of [Samuel], and [Joshua] has a daughter named [Anna] and collects vintage postcards. [Michelle] has a brother named [Anthony], and everyone knows that [Roger] is the brother of [Joan].\n\nEveryone in town knows [Diane] is the daughter of [Kenneth], and [Christina] is also the daughter of [Kenneth]. [Donald] is the son of [Mary], and [Sharon] has a daughter named [Mary]. Everyone in town knows [Ruth] is the daughter of [Andrea], and [Nancy] has a daughter named [Andrea]. [Brandon] is the son of [Nicole]. [Laura] is the daughter of [Rebecca], and teaches piano in the evenings. [Justin] is the husband of [Rebecca], and [Mark] is the son of [Justin]. Everyone in town knows [Kevin] is the son of [Peter]. [Zachary] has a daughter named [Maria], and [Zachary]'s son is [Donald]. Everyone in town knows [Jennifer] is the sister of [Rachel], and everyone in town knows [Debra] is the sister of [Rachel]. Everyone in town knows [Ashley] is the daughter of [Adam], and recently took up watercolor painting. [Cynthia]'s daughter is [Michelle]. [Carl] is the son of [Gary].\n\n[Douglas], the husband of [Nicole], is well liked, and rarely misses a local football match. [Diane], the wife of [Adam], is well liked. Everyone in town knows [Jacob] is the son of [Sharon], and has a fondness for crossword puzzles. Everyone in town knows [Walter] is the son of [Zachary]. Everyone in town knows [Anthony] is the son of [Arthur]. Everyone in town knows [Kelly] is the sister of [Roger], and volunteers at the animal shelter on weekends. [Julie] has a son named [Kenneth]. [Elizabeth] has a daughter named [Pamela], and teaches piano in the evenings. [Diane]'s daughter is [Ashley], and organizes the neighborhood book club. [Ronald]'s daughter is [Barbara]. [Justin] has a daughter named [Laura]. [Justin] has a daughter named [Julie], and works at the city library. [Carl], the husband of [Elizabeth], is well liked. [Amanda] is the wife of [Peter]. [Dennis], the husband of [Joyce], is well liked. Everyone in town knows [Walter] is the son of [Mary], and spends summers near the coast. Everyone in town knows [Frank] is the son of [Elizabeth]. Everyone in town knows [Dorothy] is the sister of [Barbara], and collects vintage postcards.\n\n[Amanda] has a son named [Kevin], and [Rebecca]'s daughter is [Julie], who studied architecture abroad. [Evelyn] has a daughter named [Diane] and organizes the neighborhood book club. Everyone in town knows [Rachel] is the daughter of [Joyce] and volunteers at the animal shelter on weekends, and everyone also knows [Deborah] is the daughter of [Jerry]. [Mary]'s brother is [Jacob], while [Cynthia]'s son is [Anthony]. [Paul]'s wife is [Karen], and [Gary]'s daughter is [Ruth], who prefers tea over coffee. [Walter]'s daughter is [Gabrielle], and [Michael] has a brother named [Thomas]. [Kelly]'s brother is [Gregory], who rarely misses a local football match. [Thomas] is the son of [Ruth], and [Jeffrey] is the husband of [Nancy]. [Nicholas]'s sister is [Pamela], who studied architecture abroad. [Katherine] is the daughter of [Amanda], and everyone in town knows [Julie] is the wife of [James]. [Kyle] is the son of [Cynthia].\n\nIn the town, [Pamela] is the daughter of [Carl]. [Mary], the wife of [Zachary], is well liked. [Paul]'s son is [Arthur], and rarely misses a local football match. [Maria]'s brother is [Walter]. Everyone in town knows [Debra] is the sister of [Jennifer], and has a fondness for crossword puzzles. [Gabrielle] has a brother named [Robert]. [Andrea] has a sister named [Karen]. Everyone in town knows [Laura] is the wife of [Joshua]. Everyone in town knows [Katherine] is the daughter of [Peter]. [Frank] has a sister named [Pamela]. [Richard] is the son of [Katherine], and works at the city library. [Jerry]'s wife is [Maria]. Everyone in town knows [Debra] is the daughter of [Joyce]. [Kenneth] is the husband of [Evelyn], and spends summers near the coast. [Mary] has a daughter named [Maria], and keeps a small vegetable garden. [Karen] is the daughter of [Nancy]. [Gregory] has a brother named [Timothy]. [Amanda] has a sister named [Andrea].\n\nIn the town, everyone knows that [Arthur] is the husband of [Cynthia], and everyone also knows that [Joseph] is the brother of [Deborah]. [James] has a son named [Kenneth] and spends summers near the coast, while [Donald]\u2019s brother is [Walter], who has a fondness for crossword puzzles. [William]\u2019s son is [Michael], who also has a fondness for crossword puzzles, and [Ronald]\u2019s wife is [Christina]. [Jennifer] is the daughter of [Joyce], [Carl] has a son named [Frank], [Amanda] is the daughter of [Nancy], and [Jeffrey]\u2019s daughter is [Amanda]. [QUERY] ('Betty', 'Timothy')",
+      "true": "uncle",
+      "group": "task_k5.medium",
+      "predictions": {
+        "arm": {
+          "predicted": "nephew",
+          "confidence": 0.4598,
+          "top_memory_atoms": [
+            {
+              "label": "nephew",
+              "memory_id": 10,
+              "weight": 0.4598,
+              "logit": -87.1591
+            },
+            {
+              "label": "aunt",
+              "memory_id": 0,
+              "weight": 0.1752,
+              "logit": -88.124
+            },
+            {
+              "label": "niece",
+              "memory_id": 11,
+              "weight": 0.1166,
+              "logit": -88.5313
+            }
+          ],
+          "top_operator_paths": [
+            {
+              "operator_id": 1,
+              "path_score": -87.1591
+            },
+            {
+              "operator_id": 3,
+              "path_score": -223.1261
+            },
+            {
+              "operator_id": 2,
+              "path_score": -239.6584
+            }
+          ],
+          "correct": false
+        },
+        "transformer": {
+          "predicted": "aunt",
+          "confidence": 0.2038,
+          "correct": false
+        }
+      }
+    }
+  ]
+}

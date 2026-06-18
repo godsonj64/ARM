@@ -1,0 +1,658 @@
+{
+  "dataset": "clutrr",
+  "labels": [
+    "aunt",
+    "brother",
+    "daughter",
+    "daughter-in-law",
+    "father",
+    "father-in-law",
+    "granddaughter",
+    "grandfather",
+    "grandmother",
+    "grandson",
+    "mother",
+    "mother-in-law",
+    "nephew",
+    "niece",
+    "sister",
+    "son",
+    "son-in-law",
+    "uncle"
+  ],
+  "vocab_size": 2798,
+  "splits": {
+    "train": 12000,
+    "validation": 3000,
+    "test": 1048
+  },
+  "args": {
+    "dataset": "clutrr",
+    "data_path": "",
+    "clutrr_config": "gen_train234_test2to10",
+    "models": [
+      "arm",
+      "dot_memory",
+      "prototype",
+      "rbf",
+      "hopfield",
+      "transformer"
+    ],
+    "max_train": 12000,
+    "max_eval": 3000,
+    "max_test": 3000,
+    "max_vocab": 30000,
+    "max_len": 256,
+    "epochs": 8,
+    "batch_size": 96,
+    "emb_dim": 128,
+    "hidden_dim": 128,
+    "latent_dim": 128,
+    "num_operators": 8,
+    "tau": 0.45,
+    "dropout": 0.15,
+    "transformer_dim": 128,
+    "transformer_heads": 4,
+    "transformer_layers": 2,
+    "transformer_ff_dim": 512,
+    "lr": 0.002,
+    "weight_decay": 0.0001,
+    "op_weight": 0.001,
+    "cycle_weight": 0.0,
+    "cycle_order": 4,
+    "clip": 1.0,
+    "seed": 42,
+    "num_samples": 5,
+    "inspect_top_k": 3,
+    "device": "cpu",
+    "out_dir": "/Users/godsonjohnson/PycharmProjects/ARM/standalone_arm_experiments/results"
+  },
+  "models": {
+    "arm": {
+      "parameters": 758024,
+      "best_val_acc": 0.9773333320617675,
+      "final_val": {
+        "loss": 0.07861745757982135,
+        "acc": 0.9773333320617675
+      },
+      "test": {
+        "loss": 11.530262043002908,
+        "acc": 0.2671755676278631
+      },
+      "history": {
+        "train_loss": [
+          2.6340626640319824,
+          0.7645827848911285,
+          0.3246930845975876,
+          0.15920356878638267,
+          0.08147057079151272,
+          0.03567796715907753,
+          0.01484056356921792,
+          0.007864199687959626
+        ],
+        "train_acc": [
+          0.22216666670143603,
+          0.7349166679382324,
+          0.8893333311080933,
+          0.9440833330154419,
+          0.972083333492279,
+          0.9874999980926513,
+          0.9944999952316285,
+          0.9972499952316284
+        ],
+        "val_loss": [
+          1.3458813228607178,
+          0.46214521074295045,
+          0.2412337590456009,
+          0.18549105274677277,
+          0.11091375759243965,
+          0.12155156448483467,
+          0.08749834821373224,
+          0.07861745757982135
+        ],
+        "val_acc": [
+          0.5353333320617676,
+          0.8413333325386048,
+          0.9123333325386047,
+          0.9450000071525574,
+          0.9656666665077209,
+          0.9666666684150695,
+          0.9740000019073486,
+          0.9773333320617675
+        ]
+      }
+    },
+    "dot_memory": {
+      "parameters": 625792,
+      "best_val_acc": 0.973,
+      "final_val": {
+        "loss": 0.09589961434900761,
+        "acc": 0.973
+      },
+      "test": {
+        "loss": 4.693226199113686,
+        "acc": 0.265267176255015
+      },
+      "history": {
+        "train_loss": [
+          2.307055579185486,
+          1.0406803255081176,
+          0.39415882182121276,
+          0.17447084227204324,
+          0.08173460026085377,
+          0.04731069150567055,
+          0.030969012841582298,
+          0.025763731829822063
+        ],
+        "train_acc": [
+          0.2994999993443489,
+          0.6625833337306977,
+          0.9000833325386047,
+          0.9566666679382324,
+          0.9838333325386047,
+          0.9914999957084656,
+          0.9966666631698609,
+          0.9978333306312561
+        ],
+        "val_loss": [
+          1.492868805885315,
+          0.6016324393749237,
+          0.26632386696338656,
+          0.1671385715305805,
+          0.12171545422077179,
+          0.11637221038341522,
+          0.10372604709863663,
+          0.09589961434900761
+        ],
+        "val_acc": [
+          0.5093333353996277,
+          0.8489999985694885,
+          0.9300000004768372,
+          0.9546666679382324,
+          0.9663333306312561,
+          0.9673333320617675,
+          0.9716666722297669,
+          0.973
+        ]
+      }
+    },
+    "prototype": {
+      "parameters": 609281,
+      "best_val_acc": 0.9779999966621399,
+      "final_val": {
+        "loss": 0.07922077431716025,
+        "acc": 0.9779999966621399
+      },
+      "test": {
+        "loss": 7.992546989490058,
+        "acc": 0.2576335842031559
+      },
+      "history": {
+        "train_loss": [
+          2.170750315666199,
+          0.5008762375116348,
+          0.19271699577569962,
+          0.07786074446141719,
+          0.03740788674727082,
+          0.014336160719394683,
+          0.004917236214969307,
+          0.003291251588612795
+        ],
+        "train_acc": [
+          0.2929166666865349,
+          0.8188333320617676,
+          0.9327500009536743,
+          0.9731666660308838,
+          0.9865833296775818,
+          0.9964166631698609,
+          0.9992499985694885,
+          0.9996666660308838
+        ],
+        "val_loss": [
+          1.0420906805992127,
+          0.28112290143966673,
+          0.17744711120426654,
+          0.12632022231817244,
+          0.13132004790753127,
+          0.0843717290982604,
+          0.07867478192225098,
+          0.07922077431716025
+        ],
+        "val_acc": [
+          0.575666663646698,
+          0.9000000023841858,
+          0.9363333320617676,
+          0.9549999985694885,
+          0.9673333268165588,
+          0.9746666665077209,
+          0.9776666660308838,
+          0.9779999966621399
+        ]
+      }
+    },
+    "rbf": {
+      "parameters": 609298,
+      "best_val_acc": 0.9793333325386048,
+      "final_val": {
+        "loss": 0.06362315851263702,
+        "acc": 0.9776666665077209
+      },
+      "test": {
+        "loss": 6.748418409633272,
+        "acc": 0.26526717591376703
+      },
+      "history": {
+        "train_loss": [
+          2.1737973742485046,
+          0.5215913668870926,
+          0.20638602656126023,
+          0.0921642355248332,
+          0.04203633944876492,
+          0.017775965724140405,
+          0.006060225257184356,
+          0.0033115309118293226
+        ],
+        "train_acc": [
+          0.2844166657626629,
+          0.8151666679382324,
+          0.9296666684150696,
+          0.9705833311080933,
+          0.9862499966621399,
+          0.9941666607856751,
+          0.9990833320617676,
+          0.9997499995231628
+        ],
+        "val_loss": [
+          1.045710491657257,
+          0.3278048030734062,
+          0.16210312500596047,
+          0.14940107089281082,
+          0.12205792281031609,
+          0.07030330639705062,
+          0.059979268409311774,
+          0.06362315851263702
+        ],
+        "val_acc": [
+          0.5883333358764649,
+          0.8846666660308838,
+          0.9446666660308838,
+          0.9496666665077209,
+          0.9679999985694885,
+          0.9793333325386048,
+          0.979333330631256,
+          0.9776666665077209
+        ]
+      }
+    },
+    "hopfield": {
+      "parameters": 611603,
+      "best_val_acc": 0.44633333110809326,
+      "final_val": {
+        "loss": 1.2327394199371338,
+        "acc": 0.44633333110809326
+      },
+      "test": {
+        "loss": 3.890066161410499,
+        "acc": 0.14790076384221323
+      },
+      "history": {
+        "train_loss": [
+          2.747147186279297,
+          2.597298601150513,
+          2.425752782821655,
+          2.0597444143295287,
+          1.6840947122573853,
+          1.377084457397461,
+          1.2242254905700685,
+          1.166124008178711
+        ],
+        "train_acc": [
+          0.10849999976158142,
+          0.12625000047683715,
+          0.16525000053644182,
+          0.22833333295583724,
+          0.3176666656732559,
+          0.3966666660308838,
+          0.4416666660308838,
+          0.46900000095367433
+        ],
+        "val_loss": [
+          2.629849462509155,
+          2.5496429080963137,
+          2.233140748023987,
+          1.8933157720565796,
+          1.567369824409485,
+          1.3151014032363892,
+          1.2460619878768922,
+          1.2327394199371338
+        ],
+        "val_acc": [
+          0.12799999952316285,
+          0.14666666650772095,
+          0.21033333396911622,
+          0.2650000014305115,
+          0.34933333325386046,
+          0.42299999928474424,
+          0.44433333396911623,
+          0.44633333110809326
+        ]
+      }
+    },
+    "transformer": {
+      "parameters": 790034,
+      "best_val_acc": 0.7266666679382324,
+      "final_val": {
+        "loss": 0.6746325309276581,
+        "acc": 0.7266666679382324
+      },
+      "test": {
+        "loss": 4.657682105785108,
+        "acc": 0.23377862874105687
+      },
+      "history": {
+        "train_loss": [
+          2.2423394823074343,
+          1.7008948602676393,
+          1.3625839948654175,
+          1.022499876022339,
+          0.8056702861785888,
+          0.6371273794174195,
+          0.5137550740242004,
+          0.4326230084896088
+        ],
+        "train_acc": [
+          0.25433333292603494,
+          0.38799999916553496,
+          0.49808333325386045,
+          0.6071666674613952,
+          0.6923333339691162,
+          0.7569166684150695,
+          0.8078333349227905,
+          0.8457500009536744
+        ],
+        "val_loss": [
+          1.8293459768295288,
+          1.5296650485992431,
+          1.1631377644538878,
+          0.9868153166770935,
+          0.7956563878059387,
+          0.7455544857978821,
+          0.6967461116313934,
+          0.6746325309276581
+        ],
+        "val_acc": [
+          0.34766666746139524,
+          0.4386666693687439,
+          0.5539999995231628,
+          0.6036666693687439,
+          0.6796666684150696,
+          0.688666663646698,
+          0.7263333320617675,
+          0.7266666679382324
+        ]
+      }
+    }
+  },
+  "samples": [
+    {
+      "sample": 0,
+      "true": "grandson",
+      "group": "task_1.2",
+      "text": "[Clarence]'s granddaughter, [Emily], was busy helping her brother, [Michael], move to college. [QUERY] ('Clarence', 'Michael')",
+      "predictions": {
+        "arm": {
+          "predicted": "grandson",
+          "confidence": 1.0,
+          "correct": true,
+          "top_memory_atoms": [
+            {
+              "label": "grandson",
+              "weight": 1.0
+            },
+            {
+              "label": "grandfather",
+              "weight": 0.0
+            },
+            {
+              "label": "brother",
+              "weight": 0.0
+            }
+          ]
+        },
+        "dot_memory": {
+          "predicted": "grandson",
+          "confidence": 0.9943,
+          "correct": true
+        },
+        "prototype": {
+          "predicted": "grandson",
+          "confidence": 1.0,
+          "correct": true
+        },
+        "rbf": {
+          "predicted": "grandson",
+          "confidence": 0.9998,
+          "correct": true
+        },
+        "hopfield": {
+          "predicted": "granddaughter",
+          "confidence": 0.4917,
+          "correct": false
+        },
+        "transformer": {
+          "predicted": "grandson",
+          "confidence": 0.7555,
+          "correct": true
+        }
+      }
+    },
+    {
+      "sample": 1,
+      "true": "grandson",
+      "group": "task_1.2",
+      "text": "[Emily] and her granddaughter [Ashley] went to the mall [Michael] likes to visit his sister. Her name is [Emily]. [QUERY] ('Ashley', 'Michael')",
+      "predictions": {
+        "arm": {
+          "predicted": "grandson",
+          "confidence": 1.0,
+          "correct": true,
+          "top_memory_atoms": [
+            {
+              "label": "grandson",
+              "weight": 1.0
+            },
+            {
+              "label": "grandfather",
+              "weight": 0.0
+            },
+            {
+              "label": "grandmother",
+              "weight": 0.0
+            }
+          ]
+        },
+        "dot_memory": {
+          "predicted": "grandson",
+          "confidence": 0.9943,
+          "correct": true
+        },
+        "prototype": {
+          "predicted": "grandson",
+          "confidence": 1.0,
+          "correct": true
+        },
+        "rbf": {
+          "predicted": "grandson",
+          "confidence": 1.0,
+          "correct": true
+        },
+        "hopfield": {
+          "predicted": "granddaughter",
+          "confidence": 0.4899,
+          "correct": false
+        },
+        "transformer": {
+          "predicted": "grandmother",
+          "confidence": 0.7135,
+          "correct": false
+        }
+      }
+    },
+    {
+      "sample": 2,
+      "true": "granddaughter",
+      "group": "task_1.2",
+      "text": "[Tony] and his sister, [June], went to a sneak preview of the Avengers movie and loved it. [Clarence] has 3 children, and one grandson. The Grandsons name is [Tony] [QUERY] ('Clarence', 'June')",
+      "predictions": {
+        "arm": {
+          "predicted": "granddaughter",
+          "confidence": 0.9999,
+          "correct": true,
+          "top_memory_atoms": [
+            {
+              "label": "granddaughter",
+              "weight": 0.9999
+            },
+            {
+              "label": "sister",
+              "weight": 0.0001
+            },
+            {
+              "label": "daughter",
+              "weight": 0.0
+            }
+          ]
+        },
+        "dot_memory": {
+          "predicted": "granddaughter",
+          "confidence": 0.9901,
+          "correct": true
+        },
+        "prototype": {
+          "predicted": "granddaughter",
+          "confidence": 0.9999,
+          "correct": true
+        },
+        "rbf": {
+          "predicted": "granddaughter",
+          "confidence": 0.9991,
+          "correct": true
+        },
+        "hopfield": {
+          "predicted": "granddaughter",
+          "confidence": 0.4919,
+          "correct": true
+        },
+        "transformer": {
+          "predicted": "granddaughter",
+          "confidence": 0.7031,
+          "correct": true
+        }
+      }
+    },
+    {
+      "sample": 3,
+      "true": "grandson",
+      "group": "task_1.2",
+      "text": "[Glen] is [Emily]'s brand new Baby brother. [Clarence] was excited to have a new Grandchild beside [Emily] [QUERY] ('Clarence', 'Glen')",
+      "predictions": {
+        "arm": {
+          "predicted": "grandson",
+          "confidence": 1.0,
+          "correct": true,
+          "top_memory_atoms": [
+            {
+              "label": "grandson",
+              "weight": 1.0
+            },
+            {
+              "label": "grandfather",
+              "weight": 0.0
+            },
+            {
+              "label": "grandmother",
+              "weight": 0.0
+            }
+          ]
+        },
+        "dot_memory": {
+          "predicted": "grandson",
+          "confidence": 0.9885,
+          "correct": true
+        },
+        "prototype": {
+          "predicted": "grandson",
+          "confidence": 0.9999,
+          "correct": true
+        },
+        "rbf": {
+          "predicted": "grandson",
+          "confidence": 0.9996,
+          "correct": true
+        },
+        "hopfield": {
+          "predicted": "granddaughter",
+          "confidence": 0.4916,
+          "correct": false
+        },
+        "transformer": {
+          "predicted": "grandson",
+          "confidence": 0.5881,
+          "correct": true
+        }
+      }
+    },
+    {
+      "sample": 4,
+      "true": "granddaughter",
+      "group": "task_1.2",
+      "text": "[June] and [Nicolas] are siblings who are enjoying lunch together. [Clarence] bought a train set for his grandson [Nicolas]. [QUERY] ('Clarence', 'June')",
+      "predictions": {
+        "arm": {
+          "predicted": "granddaughter",
+          "confidence": 1.0,
+          "correct": true,
+          "top_memory_atoms": [
+            {
+              "label": "granddaughter",
+              "weight": 1.0
+            },
+            {
+              "label": "daughter",
+              "weight": 0.0
+            },
+            {
+              "label": "daughter-in-law",
+              "weight": 0.0
+            }
+          ]
+        },
+        "dot_memory": {
+          "predicted": "granddaughter",
+          "confidence": 0.993,
+          "correct": true
+        },
+        "prototype": {
+          "predicted": "granddaughter",
+          "confidence": 1.0,
+          "correct": true
+        },
+        "rbf": {
+          "predicted": "granddaughter",
+          "confidence": 0.9998,
+          "correct": true
+        },
+        "hopfield": {
+          "predicted": "granddaughter",
+          "confidence": 0.4923,
+          "correct": true
+        },
+        "transformer": {
+          "predicted": "grandfather",
+          "confidence": 0.5599,
+          "correct": false
+        }
+      }
+    }
+  ]
+}

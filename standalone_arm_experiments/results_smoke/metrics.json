@@ -1,0 +1,480 @@
+{
+  "dataset": "synthetic",
+  "labels": [
+    "s0",
+    "s1",
+    "s2",
+    "s3",
+    "s4",
+    "s5",
+    "s6",
+    "s7"
+  ],
+  "vocab_size": 21,
+  "splits": {
+    "train": 128,
+    "validation": 64,
+    "test": 64
+  },
+  "args": {
+    "dataset": "synthetic",
+    "data_path": "",
+    "clutrr_config": "gen_train234_test2to10",
+    "models": [
+      "arm",
+      "dot_memory",
+      "prototype",
+      "rbf",
+      "hopfield",
+      "transformer"
+    ],
+    "max_train": 128,
+    "max_eval": 64,
+    "max_test": 64,
+    "max_vocab": 30000,
+    "max_len": 256,
+    "epochs": 1,
+    "batch_size": 32,
+    "emb_dim": 32,
+    "hidden_dim": 32,
+    "latent_dim": 32,
+    "num_operators": 8,
+    "tau": 0.45,
+    "dropout": 0.15,
+    "transformer_dim": 32,
+    "transformer_heads": 4,
+    "transformer_layers": 1,
+    "transformer_ff_dim": 64,
+    "lr": 0.002,
+    "weight_decay": 0.0001,
+    "op_weight": 0.001,
+    "cycle_weight": 0.0,
+    "cycle_order": 4,
+    "clip": 1.0,
+    "seed": 42,
+    "num_samples": 5,
+    "inspect_top_k": 3,
+    "device": "cpu",
+    "out_dir": "standalone_arm_experiments/results_smoke"
+  },
+  "models": {
+    "arm": {
+      "parameters": 26600,
+      "best_val_acc": 0.125,
+      "final_val": {
+        "loss": 2.2036383152008057,
+        "acc": 0.125
+      },
+      "test": {
+        "loss": 2.2571064233779907,
+        "acc": 0.140625
+      },
+      "history": {
+        "train_loss": [
+          3.6524860858917236
+        ],
+        "train_acc": [
+          0.140625
+        ],
+        "val_loss": [
+          2.2036383152008057
+        ],
+        "val_acc": [
+          0.125
+        ]
+      }
+    },
+    "dot_memory": {
+      "parameters": 18112,
+      "best_val_acc": 0.125,
+      "final_val": {
+        "loss": 2.049783706665039,
+        "acc": 0.125
+      },
+      "test": {
+        "loss": 2.0425400733947754,
+        "acc": 0.171875
+      },
+      "history": {
+        "train_loss": [
+          2.122293472290039
+        ],
+        "train_acc": [
+          0.0859375
+        ],
+        "val_loss": [
+          2.049783706665039
+        ],
+        "val_acc": [
+          0.125
+        ]
+      }
+    },
+    "prototype": {
+      "parameters": 17057,
+      "best_val_acc": 0.109375,
+      "final_val": {
+        "loss": 2.2201086282730103,
+        "acc": 0.109375
+      },
+      "test": {
+        "loss": 2.2125728130340576,
+        "acc": 0.109375
+      },
+      "history": {
+        "train_loss": [
+          2.835360825061798
+        ],
+        "train_acc": [
+          0.15625
+        ],
+        "val_loss": [
+          2.2201086282730103
+        ],
+        "val_acc": [
+          0.109375
+        ]
+      }
+    },
+    "rbf": {
+      "parameters": 17064,
+      "best_val_acc": 0.203125,
+      "final_val": {
+        "loss": 2.097271203994751,
+        "acc": 0.203125
+      },
+      "test": {
+        "loss": 2.104654908180237,
+        "acc": 0.1875
+      },
+      "history": {
+        "train_loss": [
+          2.491674244403839
+        ],
+        "train_acc": [
+          0.171875
+        ],
+        "val_loss": [
+          2.097271203994751
+        ],
+        "val_acc": [
+          0.203125
+        ]
+      }
+    },
+    "hopfield": {
+      "parameters": 17321,
+      "best_val_acc": 0.265625,
+      "final_val": {
+        "loss": 2.049170970916748,
+        "acc": 0.265625
+      },
+      "test": {
+        "loss": 2.0616180896759033,
+        "acc": 0.1875
+      },
+      "history": {
+        "train_loss": [
+          2.069864869117737
+        ],
+        "train_acc": [
+          0.125
+        ],
+        "val_loss": [
+          2.049170970916748
+        ],
+        "val_acc": [
+          0.265625
+        ]
+      }
+    },
+    "transformer": {
+      "parameters": 17736,
+      "best_val_acc": 0.125,
+      "final_val": {
+        "loss": 2.1153863668441772,
+        "acc": 0.125
+      },
+      "test": {
+        "loss": 2.0647915601730347,
+        "acc": 0.125
+      },
+      "history": {
+        "train_loss": [
+          2.127279818058014
+        ],
+        "train_acc": [
+          0.171875
+        ],
+        "val_loss": [
+          2.1153863668441772
+        ],
+        "val_acc": [
+          0.125
+        ]
+      }
+    }
+  },
+  "samples": [
+    {
+      "sample": 0,
+      "true": "s3",
+      "group": "5",
+      "text": "start s4 . apply r3 . apply r2 . apply r0 . apply r2 . apply r2 . [QUERY] final state ?",
+      "predictions": {
+        "arm": {
+          "predicted": "s5",
+          "confidence": 0.2582,
+          "correct": false,
+          "top_memory_atoms": [
+            {
+              "label": "s5",
+              "weight": 0.2582
+            },
+            {
+              "label": "s1",
+              "weight": 0.2114
+            },
+            {
+              "label": "s3",
+              "weight": 0.1469
+            }
+          ]
+        },
+        "dot_memory": {
+          "predicted": "s1",
+          "confidence": 0.1532,
+          "correct": false
+        },
+        "prototype": {
+          "predicted": "s1",
+          "confidence": 0.2551,
+          "correct": false
+        },
+        "rbf": {
+          "predicted": "s7",
+          "confidence": 0.2368,
+          "correct": false
+        },
+        "hopfield": {
+          "predicted": "s3",
+          "confidence": 0.1405,
+          "correct": true
+        },
+        "transformer": {
+          "predicted": "s5",
+          "confidence": 0.1947,
+          "correct": false
+        }
+      }
+    },
+    {
+      "sample": 1,
+      "true": "s1",
+      "group": "4",
+      "text": "start s0 . apply r3 . apply r0 . apply r0 . apply r2 . [QUERY] final state ?",
+      "predictions": {
+        "arm": {
+          "predicted": "s5",
+          "confidence": 0.2985,
+          "correct": false,
+          "top_memory_atoms": [
+            {
+              "label": "s5",
+              "weight": 0.2985
+            },
+            {
+              "label": "s1",
+              "weight": 0.1994
+            },
+            {
+              "label": "s3",
+              "weight": 0.146
+            }
+          ]
+        },
+        "dot_memory": {
+          "predicted": "s1",
+          "confidence": 0.15,
+          "correct": true
+        },
+        "prototype": {
+          "predicted": "s4",
+          "confidence": 0.2098,
+          "correct": false
+        },
+        "rbf": {
+          "predicted": "s1",
+          "confidence": 0.1858,
+          "correct": true
+        },
+        "hopfield": {
+          "predicted": "s3",
+          "confidence": 0.1414,
+          "correct": false
+        },
+        "transformer": {
+          "predicted": "s5",
+          "confidence": 0.2017,
+          "correct": false
+        }
+      }
+    },
+    {
+      "sample": 2,
+      "true": "s5",
+      "group": "5",
+      "text": "start s1 . apply r0 . apply r0 . apply r1 . apply r2 . apply r1 . [QUERY] final state ?",
+      "predictions": {
+        "arm": {
+          "predicted": "s5",
+          "confidence": 0.31,
+          "correct": true,
+          "top_memory_atoms": [
+            {
+              "label": "s5",
+              "weight": 0.31
+            },
+            {
+              "label": "s1",
+              "weight": 0.2173
+            },
+            {
+              "label": "s4",
+              "weight": 0.1168
+            }
+          ]
+        },
+        "dot_memory": {
+          "predicted": "s1",
+          "confidence": 0.1546,
+          "correct": false
+        },
+        "prototype": {
+          "predicted": "s2",
+          "confidence": 0.2024,
+          "correct": false
+        },
+        "rbf": {
+          "predicted": "s7",
+          "confidence": 0.1886,
+          "correct": false
+        },
+        "hopfield": {
+          "predicted": "s3",
+          "confidence": 0.1415,
+          "correct": false
+        },
+        "transformer": {
+          "predicted": "s5",
+          "confidence": 0.2092,
+          "correct": true
+        }
+      }
+    },
+    {
+      "sample": 3,
+      "true": "s2",
+      "group": "6",
+      "text": "start s3 . apply r3 . apply r0 . apply r3 . apply r1 . apply r0 . apply r0 . [QUERY] final state ?",
+      "predictions": {
+        "arm": {
+          "predicted": "s5",
+          "confidence": 0.3609,
+          "correct": false,
+          "top_memory_atoms": [
+            {
+              "label": "s5",
+              "weight": 0.3609
+            },
+            {
+              "label": "s1",
+              "weight": 0.1894
+            },
+            {
+              "label": "s3",
+              "weight": 0.1229
+            }
+          ]
+        },
+        "dot_memory": {
+          "predicted": "s1",
+          "confidence": 0.1516,
+          "correct": false
+        },
+        "prototype": {
+          "predicted": "s4",
+          "confidence": 0.2394,
+          "correct": false
+        },
+        "rbf": {
+          "predicted": "s2",
+          "confidence": 0.2055,
+          "correct": true
+        },
+        "hopfield": {
+          "predicted": "s3",
+          "confidence": 0.1415,
+          "correct": false
+        },
+        "transformer": {
+          "predicted": "s5",
+          "confidence": 0.2252,
+          "correct": false
+        }
+      }
+    },
+    {
+      "sample": 4,
+      "true": "s2",
+      "group": "5",
+      "text": "start s2 . apply r2 . apply r2 . apply r2 . apply r0 . apply r3 . [QUERY] final state ?",
+      "predictions": {
+        "arm": {
+          "predicted": "s5",
+          "confidence": 0.2271,
+          "correct": false,
+          "top_memory_atoms": [
+            {
+              "label": "s5",
+              "weight": 0.2271
+            },
+            {
+              "label": "s1",
+              "weight": 0.2114
+            },
+            {
+              "label": "s4",
+              "weight": 0.1446
+            }
+          ]
+        },
+        "dot_memory": {
+          "predicted": "s1",
+          "confidence": 0.1534,
+          "correct": false
+        },
+        "prototype": {
+          "predicted": "s1",
+          "confidence": 0.2507,
+          "correct": false
+        },
+        "rbf": {
+          "predicted": "s7",
+          "confidence": 0.2302,
+          "correct": false
+        },
+        "hopfield": {
+          "predicted": "s3",
+          "confidence": 0.1402,
+          "correct": false
+        },
+        "transformer": {
+          "predicted": "s5",
+          "confidence": 0.1914,
+          "correct": false
+        }
+      }
+    }
+  ]
+}

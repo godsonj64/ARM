@@ -1,0 +1,68 @@
+flowchart TB
+    title["ARM vs Transformer architecture used by benchmarks/compare_arm_transformer_clutrr_babi.py"]
+
+    subgraph shared["Shared dataset and training path"]
+        raw["CLUTRR or bAbI examples<br/>text + label"]
+        tok["Tokenizer<br/>regex tokens, lowercased<br/>PAD=0, UNK=1"]
+        batch["Batch tensors<br/>input_ids: [B, L]<br/>attention_mask: [B, L]<br/>label: [B]"]
+        loss["Cross entropy over class logits"]
+        eval["Evaluation<br/>accuracy, grouped metrics,<br/>sample predictions"]
+
+        raw --> tok --> batch
+    end
+
+    subgraph arm_model["Repo ARM model from arm/models.py"]
+        arm_wrap["MemoryClassifier"]
+        arm_embed["GRUTextEncoder.embedding<br/>nn.Embedding(vocab, emb_dim)<br/>padding_idx=0"]
+        arm_gru["GRUTextEncoder.gru<br/>bidirectional GRU<br/>output: [B, L, 2 * hidden_dim]"]
+        arm_pool["Masked mean pooling<br/>sum(valid token states) / valid_count"]
+        arm_proj["GRUTextEncoder.proj<br/>LayerNorm -> Dropout -> Linear<br/>-> GELU -> LayerNorm<br/>query q: [B, latent_dim]"]
+
+        arm_qproj["AlgebraicResonanceMemory.query_projector<br/>LayerNorm -> Linear -> GELU<br/>-> Linear -> LayerNorm"]
+        arm_ops["Learned ARM operators<br/>A_k: [K, D, D]<br/>b_k: [K, D]<br/>positive diagonal metric D<br/>operator costs c_k"]
+        arm_memory["Learned memory atoms<br/>M: [num_labels, D]"]
+        arm_paths["Transformed query paths<br/>z_k = A_k q + b_k<br/>path score = -dist_D(z_k, m_i) / tau - c_k"]
+        arm_lse["Resonance aggregation<br/>logits_i = logsumexp_k(path_score_k_i)"]
+        arm_softmax["Inspection only<br/>weights = softmax(logits)<br/>retrieved = weights @ memory<br/>path_scores retained"]
+        arm_logits["ARM class logits<br/>[B, num_labels]"]
+
+        arm_wrap --> arm_embed --> arm_gru --> arm_pool --> arm_proj --> arm_qproj
+        arm_qproj --> arm_ops --> arm_paths
+        arm_memory --> arm_paths
+        arm_paths --> arm_lse --> arm_logits
+        arm_lse --> arm_softmax
+    end
+
+    subgraph transformer_model["Transformer baseline from clutrr_multi_transformer_compare.py"]
+        tr_embed["Token embedding<br/>nn.Embedding(vocab, spec.dim)<br/>padding_idx=0"]
+        tr_pos["Learned position embedding<br/>nn.Embedding(max_len, spec.dim)"]
+        tr_sum["Input representation<br/>token_embedding * sqrt(dim) + position_embedding<br/>[B, L, dim]"]
+        tr_mask["Key padding mask<br/>attention_mask == 0"]
+        tr_encoder["nn.TransformerEncoder<br/>spec.layers encoder layers<br/>multi-head self-attention<br/>feed-forward GELU blocks"]
+        tr_pool["Masked mean pooling over encoded tokens"]
+        tr_head["LayerNorm -> Linear"]
+        tr_logits["Transformer class logits<br/>[B, num_labels]"]
+
+        tr_embed --> tr_sum
+        tr_pos --> tr_sum
+        tr_sum --> tr_encoder
+        tr_mask --> tr_encoder
+        tr_encoder --> tr_pool --> tr_head --> tr_logits
+    end
+
+    batch --> arm_wrap
+    batch --> tr_embed
+    batch --> tr_pos
+    batch --> tr_mask
+
+    arm_logits --> loss
+    tr_logits --> loss
+    arm_logits --> eval
+    tr_logits --> eval
+    arm_softmax --> eval
+
+    note_arm["ARM extra training regularizers<br/>cycle_weight * cycle_consistency_loss<br/>op_weight * operator_regularization"]
+    note_tr["Transformer spec selected by --transformer-spec<br/>tiny, small, wide, or deep"]
+
+    note_arm -.-> arm_ops
+    note_tr -.-> tr_encoder
