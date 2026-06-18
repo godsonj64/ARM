@@ -36,6 +36,72 @@ benchmark_results/clutrr_compare.json
 benchmark_results/clutrr_learning_curves.png
 ```
 
+To compare ARM against a native PyTorch Transformer encoder classifier:
+
+```bash
+python benchmarks/clutrr_transformer_compare.py --epochs 8
+```
+
+This writes:
+
+```text
+benchmark_results/clutrr_transformer_compare.json
+benchmark_results/clutrr_transformer_learning_curves.png
+```
+
+To compare ARM against multiple Transformer sizes and print sample predictions:
+
+```bash
+python benchmarks/clutrr_multi_transformer_compare.py --epochs 6 --transformers tiny,small,deep
+```
+
+This writes:
+
+```text
+benchmark_results/clutrr_multi_transformer_compare.json
+benchmark_results/clutrr_multi_transformer_learning_curves.png
+```
+
+To evaluate held-out longer-chain inductive generalization:
+
+```bash
+python benchmarks/inductive_reasoning_compare.py --epochs 6 --models arm,transformer_small
+```
+
+This reports CLUTRR held-out test accuracy grouped by chain length, and auto-downloads the official Facebook bAbI archive for additional inductive QA tasks.
+
+```text
+benchmark_results/inductive_reasoning_compare.json
+benchmark_results/clutrr_test_curves.png
+benchmark_results/babi_curves.png
+```
+
+To compare the original single-hop ARM against experimental multi-hop ARM:
+
+```bash
+python benchmarks/multihop_arm_compare.py --benchmarks clutrr --epochs 6 --models arm,multihop_arm,transformer_small
+```
+
+Multi-hop ARM lives separately in `arm/multihop.py` and applies learned operators repeatedly before scoring memory.
+
+```text
+benchmark_results/multihop_arm_compare.json
+```
+
+To run the full standard multi-hop evaluation suite:
+
+```bash
+python benchmarks/run_multihop_full_eval.py
+```
+
+This runs CLUTRR for 6 epochs and bAbI tasks 2/3 for 25 epochs with `arm`, `multihop_arm`, and `transformer_small`, saving JSON summaries plus PNG curves, label mappings, chain/support bars, and sample prediction tables.
+
+```text
+benchmark_results/multihop_full_eval/clutrr_6/
+benchmark_results/multihop_full_eval/babi_25/
+benchmark_results/multihop_full_eval/full_eval_summary.json
+```
+
 The script automatically:
 
 - downloads CLUTRR,
@@ -72,6 +138,11 @@ arm/
 
 benchmarks/
   clutrr_compare.py        Primary real-data ARM vs attention benchmark
+  clutrr_transformer_compare.py  Real-data ARM vs Transformer benchmark
+  clutrr_multi_transformer_compare.py  ARM vs multiple Transformer variants
+  inductive_reasoning_compare.py  Held-out CLUTRR and synthetic inductive benchmarks
+  multihop_arm_compare.py  Experimental single-hop ARM vs multi-hop ARM benchmark
+  run_multihop_full_eval.py  Standard CLUTRR-6 + bAbI-25 multi-hop evaluation
   synthetic_compare.py     Legacy synthetic cyclic hidden-state benchmark
 
 run_clutrr_auto_download.ipynb  Main CLUTRR auto-download Colab notebook

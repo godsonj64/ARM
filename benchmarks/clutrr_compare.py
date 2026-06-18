@@ -12,14 +12,18 @@ Outputs:
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import os
 import random
 import re
+import ssl
 import sys
 from collections import Counter
+from io import StringIO
 from pathlib import Path
 from typing import Any, Dict, List, Sequence, Tuple
+from urllib.request import urlopen
 
 import torch
 import torch.nn.functional as F
@@ -42,6 +46,25 @@ except Exception as exc:
     raise RuntimeError("Install Hugging Face datasets first: pip install datasets") from exc
 
 TOKEN_RE = re.compile(r"[A-Za-z0-9_']+|[.,!?;:()\-]")
+CLUTRR_RAW_BASE = "https://raw.githubusercontent.com/kliang5/CLUTRR_huggingface_dataset/main"
+CLUTRR_CONFIGS = [
+    "gen_train23_test2to10",
+    "gen_train234_test2to10",
+    "rob_train_clean_23_test_all_23",
+    "rob_train_disc_23_test_all_23",
+    "rob_train_irr_23_test_all_23",
+    "rob_train_sup_23_test_all_23",
+]
+
+
+def read_url_text(url: str) -> str:
+    try:
+        import certifi
+        context = ssl.create_default_context(cafile=certifi.where())
+    except Exception:
+        context = ssl.create_default_context()
+    with urlopen(url, timeout=60, context=context) as response:
+        return response.read().decode("utf-8")
 
 
 def set_threads() -> None:
@@ -98,7 +121,27 @@ def load_clutrr(dataset_name: str, preferred_config: str):
             return ds, config
         except Exception as exc:
             errors.append(f"{config}: {exc}")
+    if dataset_name.lower() in {"clutrr", "clutrr/v1"}:
+        csv_candidates = [preferred_config] + [c for c in CLUTRR_CONFIGS if c != preferred_config]
+        for config in csv_candidates:
+            try:
+                ds = load_clutrr_csvs(config)
+                return ds, config
+            except Exception as exc:
+                errors.append(f"csv fallback {config}: {exc}")
     raise RuntimeError("Could not load CLUTRR. Errors:\n" + "\n".join(errors[-8:]))
+
+
+def load_clutrr_csvs(config: str) -> Dict[str, List[Dict[str, str]]]:
+    if config not in CLUTRR_CONFIGS:
+        raise ValueError(f"Unknown CLUTRR config {config!r}. Known configs: {CLUTRR_CONFIGS}")
+    ds: Dict[str, List[Dict[str, str]]] = {}
+    for split in ["train", "validation", "test"]:
+        url = f"{CLUTRR_RAW_BASE}/{config}/{split}.csv"
+        text = read_url_text(url)
+        ds[split] = list(csv.DictReader(StringIO(text)))
+    print("Loaded CLUTRR CSV fallback config:", config)
+    return ds
 
 
 def rows_from_split(split, story_col: str, query_col: str, label_col: str, limit: int) -> List[Tuple[str, str]]:
@@ -270,7 +313,7 @@ def plot_results(results: Dict[str, object], out_dir: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset-name", type=str, default="clutrr")
+    parser.add_argument("--dataset-name", type=str, default="CLUTRR/v1")
     parser.add_argument("--preferred-config", type=str, default="gen_train234_test2to10")
     parser.add_argument("--max-train", type=int, default=12000)
     parser.add_argument("--max-eval", type=int, default=3000)

@@ -4,10 +4,12 @@
 # Concept direction: Godson Johnson
 # ============================================================
 
-import math, os, re, random
+import csv, math, os, re, random, ssl
 from collections import Counter
 from dataclasses import dataclass
+from io import StringIO
 from typing import Any, Dict, List, Tuple
+from urllib.request import urlopen
 
 import torch
 try:
@@ -40,7 +42,7 @@ print("Using device:", device)
 
 @dataclass
 class Config:
-    dataset_name: str = "clutrr"
+    dataset_name: str = "CLUTRR/v1"
     preferred_config: str = "gen_train234_test2to10"
     max_train: int = 12000
     max_eval: int = 3000
@@ -67,6 +69,39 @@ cfg = Config()
 # Dataset utilities
 # -----------------------------
 
+CLUTRR_RAW_BASE = "https://raw.githubusercontent.com/kliang5/CLUTRR_huggingface_dataset/main"
+CLUTRR_CONFIGS = [
+    "gen_train23_test2to10",
+    "gen_train234_test2to10",
+    "rob_train_clean_23_test_all_23",
+    "rob_train_disc_23_test_all_23",
+    "rob_train_irr_23_test_all_23",
+    "rob_train_sup_23_test_all_23",
+]
+
+
+def read_url_text(url):
+    try:
+        import certifi
+        context = ssl.create_default_context(cafile=certifi.where())
+    except Exception:
+        context = ssl.create_default_context()
+    with urlopen(url, timeout=60, context=context) as response:
+        return response.read().decode("utf-8")
+
+
+def load_clutrr_csvs(config):
+    if config not in CLUTRR_CONFIGS:
+        raise ValueError(f"Unknown CLUTRR config {config!r}. Known configs: {CLUTRR_CONFIGS}")
+    ds = {}
+    for split in ["train", "validation", "test"]:
+        url = f"{CLUTRR_RAW_BASE}/{config}/{split}.csv"
+        text = read_url_text(url)
+        ds[split] = list(csv.DictReader(StringIO(text)))
+    print("Loaded CLUTRR CSV fallback config:", config)
+    return ds
+
+
 def load_clutrr():
     print("\nLoading CLUTRR from Hugging Face datasets...")
     errors, configs = [], []
@@ -85,6 +120,13 @@ def load_clutrr():
             return ds, c
         except Exception as e:
             errors.append(f"{c}: {e}")
+    if cfg.dataset_name.lower() in {"clutrr", "clutrr/v1"}:
+        csv_candidates = [cfg.preferred_config] + [c for c in CLUTRR_CONFIGS if c != cfg.preferred_config]
+        for c in csv_candidates:
+            try:
+                return load_clutrr_csvs(c), c
+            except Exception as e:
+                errors.append(f"csv fallback {c}: {e}")
     raise RuntimeError("Could not load CLUTRR. Last errors:\n" + "\n".join(errors[-6:]))
 
 
@@ -201,6 +243,18 @@ class AlgebraicResonanceMemory(nn.Module):
         I = torch.eye(self.dim, device=self.ops.device, dtype=self.ops.dtype)
         return (self.ops - I.unsqueeze(0)).square().mean() + 0.1 * self.bias.square().mean()
 
+class AttentionMemory(nn.Module):
+    def __init__(self, dim, memories):
+        super().__init__(); self.dim = dim
+        self.memory = nn.Parameter(torch.randn(memories, dim) / math.sqrt(dim))
+        self.qproj = nn.Sequential(nn.LayerNorm(dim), nn.Linear(dim, dim), nn.GELU(), nn.Dropout(cfg.dropout), nn.Linear(dim, dim), nn.LayerNorm(dim))
+        self.scale = math.sqrt(dim)
+    def forward(self, q):
+        q = self.qproj(q)
+        logits = q @ self.memory.t() / self.scale
+        weights = F.softmax(logits, -1)
+        return {"logits": logits, "weights": weights, "retrieved": weights @ self.memory}
+
 class TextEncoder(nn.Module):
     def __init__(self, vocab):
         super().__init__()
@@ -217,34 +271,71 @@ class ARMCLUTRR(nn.Module):
         super().__init__(); self.enc = TextEncoder(vocab); self.arm = AlgebraicResonanceMemory(cfg.dim, labels, cfg.operators, cfg.tau)
     def forward(self, ids, mask): return self.arm(self.enc(ids, mask))
 
+class AttentionCLUTRR(nn.Module):
+    def __init__(self, vocab, labels):
+        super().__init__(); self.enc = TextEncoder(vocab); self.attn = AttentionMemory(cfg.dim, labels)
+    def forward(self, ids, mask): return self.attn(self.enc(ids, mask))
 
-def batch_loss(model, batch):
+
+def batch_loss(model, batch, kind="arm"):
     ids, mask, y = batch["input_ids"].to(device), batch["attention_mask"].to(device), batch["label"].to(device)
     out = model(ids, mask)
     ce = F.cross_entropy(out["logits"], y)
-    loss = ce + cfg.cycle_w * model.arm.cycle_loss(4) + cfg.op_w * model.arm.op_reg()
+    loss = ce
+    if kind == "arm":
+        loss = loss + cfg.cycle_w * model.arm.cycle_loss(4) + cfg.op_w * model.arm.op_reg()
     with torch.no_grad(): acc = (out["logits"].argmax(-1) == y).float().mean().item()
     return loss, acc
 
 @torch.no_grad()
-def evaluate(model, loader):
+def evaluate(model, loader, kind="arm"):
     model.eval(); tot_l = tot_a = n = 0
     for b in loader:
-        loss, acc = batch_loss(model, b); bs = b["label"].shape[0]
+        loss, acc = batch_loss(model, b, kind); bs = b["label"].shape[0]
         tot_l += loss.item() * bs; tot_a += acc * bs; n += bs
     return tot_l / max(1, n), tot_a / max(1, n)
 
 
-def run_tests(model, loader):
-    print("\nRunning tests...")
+def run_tests(model, loader, kind="arm"):
+    print(f"\nRunning {kind} tests...")
     b = next(iter(loader)); out = model(b["input_ids"].to(device), b["attention_mask"].to(device)); bs = b["label"].shape[0]
     assert out["logits"].shape[0] == bs and out["weights"].shape == out["logits"].shape
-    assert out["retrieved"].shape == (bs, cfg.dim) and out["path_scores"].shape[0] == bs
-    loss, _ = batch_loss(model, b); assert torch.isfinite(loss)
+    assert out["retrieved"].shape == (bs, cfg.dim)
+    if kind == "arm":
+        assert out["path_scores"].shape[0] == bs
+    loss, _ = batch_loss(model, b, kind); assert torch.isfinite(loss)
     loss.backward()
     for name, p in model.named_parameters():
         if p.grad is not None: assert torch.isfinite(p.grad).all(), name
-    model.zero_grad(set_to_none=True); print("All tests passed.")
+    model.zero_grad(set_to_none=True); print(f"{kind} tests passed.")
+
+
+def make_model(kind, vocab, labels):
+    if kind == "arm":
+        return ARMCLUTRR(vocab, labels)
+    if kind == "attention":
+        return AttentionCLUTRR(vocab, labels)
+    raise ValueError(kind)
+
+
+def train_model(kind, train_loader, eval_loader, vocab, labels, used_config, label_to_id, id_to_label, tok):
+    seed_all(42)
+    model = make_model(kind, vocab, labels).to(device); print(model); run_tests(model, train_loader, kind)
+    opt = torch.optim.AdamW(model.parameters(), lr=cfg.lr, weight_decay=cfg.wd); sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=cfg.epochs)
+    hist = {"train_loss": [], "train_acc": [], "eval_loss": [], "eval_acc": []}; best = -1.0
+    checkpoint = f"{kind}_clutrr_checkpoint.pt"
+    for ep in range(1, cfg.epochs + 1):
+        model.train(); tl = ta = n = 0
+        for b in train_loader:
+            opt.zero_grad(set_to_none=True); loss, acc = batch_loss(model, b, kind); loss.backward(); torch.nn.utils.clip_grad_norm_(model.parameters(), cfg.clip); opt.step()
+            bs = b["label"].shape[0]; tl += loss.item() * bs; ta += acc * bs; n += bs
+        sched.step(); tr_l, tr_a = tl / max(1, n), ta / max(1, n); ev_l, ev_a = evaluate(model, eval_loader, kind)
+        hist["train_loss"].append(tr_l); hist["train_acc"].append(tr_a); hist["eval_loss"].append(ev_l); hist["eval_acc"].append(ev_a)
+        if ev_a > best:
+            best = ev_a; torch.save({"model": model.state_dict(), "kind": kind, "config": cfg.__dict__, "dataset_config": used_config, "label_to_id": label_to_id, "id_to_label": id_to_label, "vocab": tok.stoi, "history": hist, "best_eval_acc": best}, checkpoint)
+        print(f"{kind:9s} Epoch {ep:03d}/{cfg.epochs} | train_loss={tr_l:.4f} | train_acc={tr_a:.4f} | eval_loss={ev_l:.4f} | eval_acc={ev_a:.4f}")
+    print(f"\nBest {kind} CLUTRR eval accuracy:", round(best, 4)); print("Checkpoint:", checkpoint)
+    return model, hist, best, checkpoint
 
 
 def main():
@@ -254,21 +345,16 @@ def main():
     tok = Tokenizer(cfg.max_vocab); tok.fit([x for x, _ in train_rows])
     train_ds, eval_ds = CLUTRRDataset(train_rows, tok, label_to_id), CLUTRRDataset(eval_rows, tok, label_to_id)
     train_loader = DataLoader(train_ds, batch_size=cfg.batch, shuffle=True, drop_last=True); eval_loader = DataLoader(eval_ds, batch_size=cfg.batch)
-    model = ARMCLUTRR(len(tok.itos), len(labels)).to(device); print(model); run_tests(model, train_loader)
-    opt = torch.optim.AdamW(model.parameters(), lr=cfg.lr, weight_decay=cfg.wd); sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=cfg.epochs)
-    hist = {"train_loss": [], "train_acc": [], "eval_loss": [], "eval_acc": []}; best = 0.0
-    for ep in range(1, cfg.epochs + 1):
-        model.train(); tl = ta = n = 0
-        for b in train_loader:
-            opt.zero_grad(set_to_none=True); loss, acc = batch_loss(model, b); loss.backward(); torch.nn.utils.clip_grad_norm_(model.parameters(), cfg.clip); opt.step()
-            bs = b["label"].shape[0]; tl += loss.item() * bs; ta += acc * bs; n += bs
-        sched.step(); tr_l, tr_a = tl / max(1, n), ta / max(1, n); ev_l, ev_a = evaluate(model, eval_loader)
-        hist["train_loss"].append(tr_l); hist["train_acc"].append(tr_a); hist["eval_loss"].append(ev_l); hist["eval_acc"].append(ev_a)
-        if ev_a > best:
-            best = ev_a; torch.save({"model": model.state_dict(), "config": cfg.__dict__, "dataset_config": used_config, "label_to_id": label_to_id, "id_to_label": id_to_label, "vocab": tok.stoi, "history": hist, "best_eval_acc": best}, "arm_clutrr_checkpoint.pt")
-        print(f"Epoch {ep:03d}/{cfg.epochs} | train_loss={tr_l:.4f} | train_acc={tr_a:.4f} | eval_loss={ev_l:.4f} | eval_acc={ev_a:.4f}")
-    print("\nBest CLUTRR eval accuracy:", round(best, 4)); print("Checkpoint: arm_clutrr_checkpoint.pt")
-    inspect(model, eval_ds, id_to_label); plot(hist)
+    results = {}
+    for kind in ["attention", "arm"]:
+        print(f"\n=== Training {kind} model ===")
+        model, hist, best, checkpoint = train_model(kind, train_loader, eval_loader, len(tok.itos), len(labels), used_config, label_to_id, id_to_label, tok)
+        results[kind] = {"model": model, "history": hist, "best": best, "checkpoint": checkpoint}
+    print("\nComparison summary:")
+    for kind, result in results.items():
+        final_acc = result["history"]["eval_acc"][-1]
+        print(f"{kind:9s} | best_eval_acc={result['best']:.4f} | final_eval_acc={final_acc:.4f} | checkpoint={result['checkpoint']}")
+    inspect(results["arm"]["model"], eval_ds, id_to_label); plot_compare({k: v["history"] for k, v in results.items()})
 
 @torch.no_grad()
 def inspect(model, ds, id_to_label, n=10):
@@ -282,6 +368,14 @@ def plot(hist):
     xs = range(1, len(hist["train_loss"]) + 1)
     plt.figure(figsize=(8, 5)); plt.plot(xs, hist["train_loss"], label="train loss"); plt.plot(xs, hist["eval_loss"], label="eval loss"); plt.title("ARM on CLUTRR: Loss"); plt.xlabel("Epoch"); plt.ylabel("Loss"); plt.grid(True); plt.legend(); plt.show()
     plt.figure(figsize=(8, 5)); plt.plot(xs, hist["train_acc"], label="train acc"); plt.plot(xs, hist["eval_acc"], label="eval acc"); plt.title("ARM on CLUTRR: Kinship Retrieval"); plt.xlabel("Epoch"); plt.ylabel("Accuracy"); plt.grid(True); plt.legend(); plt.show()
+
+def plot_compare(histories):
+    if plt is None: return
+    plt.figure(figsize=(8, 5))
+    for kind, hist in histories.items():
+        xs = range(1, len(hist["eval_acc"]) + 1)
+        plt.plot(xs, hist["eval_acc"], label=f"{kind} eval acc")
+    plt.title("CLUTRR: ARM vs Attention"); plt.xlabel("Epoch"); plt.ylabel("Accuracy"); plt.grid(True); plt.legend(); plt.show()
 
 if __name__ == "__main__":
     main()

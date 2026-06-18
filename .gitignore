@@ -7,6 +7,8 @@ __pycache__/
 *.pth
 *.ckpt
 benchmark_results/
+data_babi/
+benchmarks/data_babi/
 .DS_Store
 .env
 .venv/
