@@ -6,6 +6,7 @@ __pycache__/
 *.pt
 *.pth
 *.ckpt
+benchmark_results/
 .DS_Store
 .env
 .venv/
