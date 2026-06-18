@@ -13,56 +13,19 @@ R(q)        = softmax_i(rho(q, m_i)) M
 
 This allows different cue forms, relational paths, or temporal states to converge to the same latent memory.
 
-## Repository structure
+## Primary benchmark: CLUTRR real-data comparison
 
-```text
-arm/
-  __init__.py              Public package exports
-  models.py                ARM layer, attention baseline, encoders
-  synthetic.py             Cyclic fan-state dataset
+The default benchmark now uses **CLUTRR**, a real kinship-reasoning dataset downloaded automatically through Hugging Face `datasets`.
 
-benchmarks/
-  synthetic_compare.py     ARM vs direct attention on cyclic hidden-state retrieval
-  clutrr_compare.py        ARM vs direct attention on CLUTRR kinship reasoning
-
-arm_colab_runnable.py      Original synthetic Colab script
-arm_clutrr_colab.py        Original CLUTRR Colab script
-arm_colab_runnable.ipynb   Main Colab launcher for benchmark comparison
-run_colab_benchmarks.ipynb Additional Colab benchmark launcher
-requirements.txt           Python dependencies
-```
-
-## Install
-
-```bash
-pip install -r requirements.txt
-```
-
-## Benchmark 1: synthetic cyclic fan-state retrieval
-
-This benchmark tests the original ARM idea: multiple cue types retrieve the same hidden cyclic state.
-
-```bash
-python benchmarks/synthetic_compare.py --epochs 20
-```
-
-Outputs:
-
-```text
-benchmark_results/synthetic_compare.json
-benchmark_results/synthetic_learning_curves.png
-```
-
-The script trains two models under the same setup:
+It compares:
 
 1. `attention`: direct query-memory attention baseline.
 2. `arm`: Algebraic Resonance Memory with learned operator paths.
 
-## Benchmark 2: CLUTRR real-dataset comparison
-
-This benchmark downloads CLUTRR from Hugging Face and compares ARM against direct attention on kinship-relation reasoning.
+Run locally:
 
 ```bash
+pip install -r requirements.txt
 python benchmarks/clutrr_compare.py --epochs 8
 ```
 
@@ -73,24 +36,61 @@ benchmark_results/clutrr_compare.json
 benchmark_results/clutrr_learning_curves.png
 ```
 
+The script automatically:
+
+- downloads CLUTRR,
+- detects available CLUTRR configs,
+- falls back across configs if needed,
+- infers story/query/label columns defensively,
+- builds a word-level tokenizer,
+- trains both ARM and attention under the same encoder setup,
+- writes JSON metrics and a learning-curve plot.
+
 ## Run in Google Colab
 
-Open either notebook:
+Open:
+
+```text
+run_clutrr_auto_download.ipynb
+```
+
+or:
 
 ```text
 arm_colab_runnable.ipynb
-run_colab_benchmarks.ipynb
 ```
 
-The notebooks clone this repository, install requirements, and run both benchmark scripts.
+Both notebooks clone the repo, install dependencies, auto-download CLUTRR, and run the real-data benchmark.
+
+## Repository structure
+
+```text
+arm/
+  __init__.py              Public package exports
+  models.py                ARM layer, attention baseline, encoders
+  synthetic.py             Legacy synthetic cyclic fan-state dataset
+
+benchmarks/
+  clutrr_compare.py        Primary real-data ARM vs attention benchmark
+  synthetic_compare.py     Legacy synthetic cyclic hidden-state benchmark
+
+run_clutrr_auto_download.ipynb  Main CLUTRR auto-download Colab notebook
+arm_colab_runnable.ipynb        CLUTRR-only Colab launcher
+run_colab_benchmarks.ipynb      Optional benchmark launcher
+requirements.txt                Python dependencies
+```
+
+## Optional legacy synthetic benchmark
+
+The synthetic cyclic benchmark is still available for controlled debugging, but it is no longer the default benchmark path.
+
+```bash
+python benchmarks/synthetic_compare.py --epochs 20
+```
 
 ## Notes on interpretation
 
-The benchmark scripts are intended to test whether ARM's transformed-query retrieval offers advantages over direct attention under controlled conditions. They do not prove general superiority over Transformer attention. Stronger claims require repeated runs, confidence intervals, tuned baselines, and larger-scale experiments.
-
-## Paper
-
-The theoretical manuscript frames ARM as a transformation-mediated retrieval scoring principle, not as a replacement for all attention mechanisms.
+The CLUTRR benchmark tests ARM against a direct attention-memory baseline under the same text encoder. Results should be interpreted as an initial architecture comparison, not as proof of general superiority over Transformer attention. Stronger claims require repeated runs, tuned baselines, confidence intervals, and larger-scale experiments.
 
 ## License
 
